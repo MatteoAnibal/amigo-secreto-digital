@@ -4,214 +4,181 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Amigo secreto - Digital</title>
-<meta name="description" content="Amigo secreto online: cadastre os nomes, defina restrições, cada pessoa monta a lista de presentes e o sorteio não repete ninguém.">
+<meta name="description" content="Amigo secreto online: cada pessoa sorteia o seu nome e conta o que quer ganhar.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23173d31'/%3E%3Cpath d='M32 12c2 12 8 18 20 20-12 2-18 8-20 20-2-12-8-18-20-20 12-2 18-8 20-20z' fill='%23e9c27c'/%3E%3C/svg%3E">
 <style>
-/* ===== CONFIGURAÇÃO ===== */
 :root{
   --bg:#f9f6f0; --card:#fffdf8; --line:#ebe5d9; --verde:#173d31; --verde2:#1f5c45; --verde-claro:#e6f0ea;
-  --vermelho:#b9483f; --vermelho-claro:#f8e6e1; --ouro:#e9c27c; --ouro-claro:#f6edd5; --texto:#2b3a34; --suave:#6b746f;
-  --num:#ddd6c8; --raio:22px; --sombra:0 18px 40px -22px rgba(30,40,30,.25);
+  --vermelho:#b9483f; --vermelho-claro:#f8e6e1; --ouro:#e9c27c; --ouro-claro:#f6edd5; --texto:#25342e; --suave:#5f6964;
+  --raio:22px; --sombra:0 18px 40px -22px rgba(30,40,30,.25);
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--texto);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+html,body{margin:0;background:var(--bg);color:var(--texto);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;font-size:19px;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--verde)}
 button,input,select,textarea{font:inherit;color:inherit}
-.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.estreito{max-width:640px;margin:0 auto}
 /* topo */
-header.top{background:#fffdf9;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
-header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:12px}
+header.top{background:#fffdf9;border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:12px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:20px;color:var(--verde);letter-spacing:-.3px}
-.logo .mk{width:44px;height:44px;border-radius:12px;background:var(--verde);display:grid;place-items:center;transform:rotate(-6deg);box-shadow:0 6px 14px -6px rgba(23,61,49,.6)}
+.logo .mk{width:42px;height:42px;border-radius:12px;background:var(--verde);display:grid;place-items:center;transform:rotate(-6deg);flex:none}
 .logo .mk svg{transform:rotate(6deg)}
 .logo b{color:var(--vermelho);font-weight:700}
-.top-acoes{display:flex;gap:10px;align-items:center}
+.top-acoes{display:flex;gap:8px;align-items:center}
+/* textos */
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--vermelho);font-weight:800;letter-spacing:2.2px;font-size:14px;text-transform:uppercase;margin:0 0 10px}
+h1,h2,h3{color:var(--verde);line-height:1.1;margin:0}
+h1{font-size:clamp(36px,7vw,64px);letter-spacing:-1.5px}
+h2{font-size:clamp(28px,5vw,42px);letter-spacing:-1px}
+h3{font-size:24px;letter-spacing:-.3px}
+.sub{color:var(--suave);margin:8px 0 0}
+section{padding:36px 0}
 /* botões */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:12px;padding:14px 26px;font-weight:700;font-size:17px;cursor:pointer;text-decoration:none;transition:transform .12s,box-shadow .12s,background .12s;min-height:52px}
-.btn:active{transform:translateY(1px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:16px;padding:16px 26px;font-weight:700;font-size:20px;cursor:pointer;text-decoration:none;min-height:60px;transition:transform .1s,background .12s;text-align:center}
+.btn:active{transform:scale(.98)}
 .btn-verde{background:var(--verde2);color:#fff;box-shadow:0 10px 20px -12px rgba(31,92,69,.9)}
 .btn-verde:hover{background:#184b38}
-.btn-borda{background:#fff;color:var(--verde);border:1.5px solid #cfd8d2}
-.btn-borda:hover{border-color:var(--verde2)}
+.btn-borda{background:#fff;color:var(--verde);border:2px solid #cfd8d2}
 .btn-vermelho{background:var(--vermelho);color:#fff}
-.btn-link{background:none;border:0;color:var(--verde);font-weight:700;padding:6px 2px;cursor:pointer;border-bottom:1.5px solid var(--verde);border-radius:0;min-height:0}
-.btn-peq{padding:9px 16px;min-height:40px;font-size:15px;border-radius:10px}
-.btn[disabled]{opacity:.5;cursor:not-allowed}
-.btn-sair{background:none;border:0;font-weight:700;color:var(--verde);cursor:pointer;padding:8px}
-/* títulos */
-.eyebrow{display:flex;align-items:center;gap:8px;color:var(--vermelho);font-weight:800;letter-spacing:2.4px;font-size:13px;text-transform:uppercase;margin:0 0 14px}
-h1,h2,h3{color:var(--verde);letter-spacing:-.8px;line-height:1.08;margin:0}
-h1{font-size:clamp(42px,7vw,86px);font-weight:700;letter-spacing:-2.5px}
-h1 em,h2 em{font-style:normal;color:var(--vermelho)}
-h2{font-size:clamp(30px,4.4vw,50px);font-weight:700;letter-spacing:-1.4px}
-h3{font-size:22px;letter-spacing:-.4px}
-.lead{color:var(--suave);font-size:19px;max-width:720px;margin:18px 0 0}
-.sub{color:var(--suave);margin:10px 0 0}
-section{padding:64px 0}
-/* hero */
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;padding:70px 0 40px}
-.hero-btns{display:flex;flex-wrap:wrap;gap:16px;margin-top:30px}
-.hero-img{position:relative;background:#fbf2e4;border:1px solid #f1e3cc;border-radius:34px;padding:14px;box-shadow:var(--sombra)}
-.hero-img svg{display:block;width:100%;height:auto;border-radius:24px}
-.hero-tag{position:absolute;left:-20px;right:24px;bottom:28px;background:#fff;border-radius:18px;padding:16px 20px;display:flex;gap:14px;align-items:center;box-shadow:0 16px 30px -14px rgba(0,0,0,.25)}
-.hero-tag .mk{width:48px;height:48px;border-radius:12px;background:var(--verde);display:grid;place-items:center;flex:none}
-.hero-tag strong{color:var(--verde);display:block}
-.hero-tag small{color:var(--suave)}
+.btn-ouro{background:var(--ouro);color:var(--verde)}
+.btn-full{width:100%}
+.btn-peq{padding:10px 16px;min-height:44px;font-size:16px;border-radius:12px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.link-sim{background:none;border:0;color:var(--verde);font-weight:700;cursor:pointer;text-decoration:underline;padding:10px 4px;font-size:17px}
 /* cards */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--raio);padding:30px;box-shadow:var(--sombra)}
-.card p{color:var(--suave);margin:10px 0 0}
-.passo-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
-.ico{width:66px;height:66px;border-radius:16px;display:grid;place-items:center}
-.ico.v{background:var(--verde-claro)} .ico.r{background:var(--vermelho-claro)} .ico.o{background:var(--ouro-claro)}
-.num{font-size:54px;font-weight:800;color:var(--num);line-height:1;letter-spacing:-2px}
-/* grupos */
-.lista-grupos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:28px}
-.grupo-card{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;transition:transform .12s}
-.grupo-card:hover{transform:translateY(-3px)}
-.grupo-card h3{font-size:22px}
-.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:4px 12px;font-size:14px;font-weight:600;background:var(--verde-claro);color:var(--verde)}
-.pill.r{background:var(--vermelho-claro);color:var(--vermelho)}
-.pill.o{background:var(--ouro-claro);color:#8a6418}
-.pill.c{background:#f0ede6;color:var(--suave)}
-/* formulários */
-label.campo{display:block;margin-top:18px}
-label.campo>span{display:block;font-weight:700;color:var(--verde);margin-bottom:6px}
-label.campo>small,.ajuda{display:block;color:var(--suave);font-size:14.5px;margin-top:4px}
-input[type=text],input[type=password],input[type=url],input[type=tel],select,textarea{width:100%;padding:14px 16px;border:1.5px solid #d9d3c6;border-radius:12px;background:#fff;font-size:17px;outline:none;transition:border .12s}
-input:focus,select:focus,textarea:focus{border-color:var(--verde2);box-shadow:0 0 0 4px rgba(31,92,69,.12)}
-textarea{min-height:110px;resize:vertical}
-.linha{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
-.form-card{max-width:620px}
-.aviso{border-radius:14px;padding:14px 18px;margin-top:16px;font-size:15.5px}
-.aviso.r{background:var(--vermelho-claro);color:#8c2f28}
-.aviso.v{background:var(--verde-claro);color:var(--verde)}
-.aviso.o{background:var(--ouro-claro);color:#6f5112}
-/* página do grupo */
-.g-hero{padding:46px 0 10px}
-.acoes-grupo{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:30px}
-.acao{display:flex;gap:18px;align-items:center;text-decoration:none;color:inherit;cursor:pointer;transition:transform .12s;text-align:left;width:100%;font:inherit}
-.acao:hover{transform:translateY(-3px)}
-.acao .ico{flex:none}
-.acao h3{font-size:22px}
-.acao p{margin:4px 0 0}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:9px 16px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:16px}
-.chip:hover{border-color:var(--verde2)}
-.chip.ativo{background:var(--verde2);color:#fff;border-color:var(--verde2)}
-.chip .ok{width:20px;height:20px;border-radius:50%;background:var(--verde-claro);color:var(--verde);display:grid;place-items:center;font-size:12px}
-.chip.ativo .ok{background:rgba(255,255,255,.25);color:#fff}
-.chip.pend{color:var(--suave)}
-/* cartão de presentes */
-.presentes{margin-top:22px}
-.pres-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.tam{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.tam div{background:#f6f2ea;border-radius:14px;padding:12px;text-align:center}
-.tam small{display:block;color:var(--suave);font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
-.tam b{font-size:22px;color:var(--verde)}
-.ideias{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
-.ideias li{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#fff;display:flex;gap:12px;align-items:flex-start}
-.ideias li.fav{border-color:#e8c98c;background:#fffaf0}
-.ideias .estrela{color:#c79a3c;font-size:20px;line-height:1.2;flex:none}
-.ideias a{word-break:break-all;font-weight:600}
-.surpresa{background:linear-gradient(135deg,#1f5c45,#173d31);color:#fff;border-radius:16px;padding:18px 20px;margin-top:16px;display:flex;gap:14px;align-items:center}
-.surpresa b{font-size:19px}
-.vazio{color:var(--suave);text-align:center;padding:30px 10px}
-/* participante */
-.nomes{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:20px}
-.nome-btn{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:18px;font-weight:700;font-size:18px;color:var(--verde);cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.nome-btn:hover{border-color:var(--verde2);background:#fbfffc}
-.pin{display:flex;gap:12px;margin-top:14px}
-.pin input{width:64px;height:72px;text-align:center;font-size:32px;font-weight:700;padding:0;border-radius:14px}
-.abas{display:flex;gap:8px;background:#efeadf;border-radius:14px;padding:6px;margin:24px 0;overflow-x:auto}
-.aba{flex:1;border:0;background:none;padding:12px 14px;border-radius:10px;font-weight:700;color:var(--suave);cursor:pointer;white-space:nowrap;min-height:48px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--raio);padding:26px;box-shadow:var(--sombra)}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:5px 14px;font-size:15px;font-weight:600;background:var(--verde-claro);color:var(--verde)}
+.pill.r{background:var(--vermelho-claro);color:var(--vermelho)} .pill.o{background:var(--ouro-claro);color:#7c5913} .pill.c{background:#efebe3;color:var(--suave)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.aviso{border-radius:16px;padding:16px 18px;margin-top:16px;font-size:17px}
+.aviso.r{background:var(--vermelho-claro);color:#8c2f28} .aviso.v{background:var(--verde-claro);color:var(--verde)} .aviso.o{background:var(--ouro-claro);color:#6a4c10}
+/* botão grande "Quem sou eu" */
+.grande{display:flex;align-items:center;gap:20px;width:100%;border:0;border-radius:26px;padding:28px 26px;background:linear-gradient(135deg,#1f5c45,#173d31);color:#fff;cursor:pointer;text-align:left;box-shadow:0 22px 40px -20px rgba(23,61,49,.9);text-decoration:none;margin-top:26px}
+.grande:active{transform:scale(.99)}
+.grande .ic{width:76px;height:76px;border-radius:22px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:42px;flex:none}
+.grande b{display:block;font-size:clamp(28px,6vw,38px);line-height:1.1}
+.grande .tx{display:block;color:#fff}
+.grande .tx span{display:block;color:#cfe2d8;font-size:18px;margin-top:6px}
+/* lista de pedidos */
+.pedidos{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-top:20px}
+.pedido h3{font-size:26px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.pedido .nada{color:var(--suave);font-style:italic;margin-top:10px}
+.itens{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.itens li{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.itens li.fav{border-color:#e3c07e;background:#fffaee}
+.itens .t{font-weight:600;font-size:19px;white-space:pre-wrap;word-break:break-word}
+.loja{display:inline-flex;align-items:center;gap:8px;margin-top:10px;background:var(--verde2);color:#fff;text-decoration:none;font-weight:700;border-radius:12px;padding:10px 16px;font-size:17px}
+.loja small{font-weight:500;opacity:.8}
+.tams{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tams span{background:#f2ede3;border-radius:12px;padding:8px 12px;font-size:16px;color:var(--suave)}
+.tams b{color:var(--verde);font-size:19px}
+.surp{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#1f5c45,#173d31);color:#fff;border-radius:16px;padding:14px 16px;margin-top:12px;font-weight:700;font-size:19px}
+.dica{margin:12px 0 0;color:var(--texto)} .dica b{color:var(--verde)}
+/* nomes */
+.nomes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:22px}
+.nome-btn{border:2px solid var(--line);background:#fff;border-radius:20px;padding:24px 22px;font-weight:800;font-size:26px;color:var(--verde);cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:var(--sombra)}
+.nome-btn:hover,.nome-btn:focus{border-color:var(--verde2)}
+.nome-btn small{font-size:15px;font-weight:600;color:var(--suave)}
+/* teclado da senha */
+.pontos{display:flex;gap:18px;justify-content:center;margin:24px 0}
+.pontos i{width:26px;height:26px;border-radius:50%;border:3px solid var(--verde2);display:block}
+.pontos i.on{background:var(--verde2)}
+.pontos.erro{animation:treme .35s}
+@keyframes treme{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.teclado{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:360px;margin:0 auto}
+.teclado button{height:76px;border-radius:20px;border:2px solid var(--line);background:#fff;font-size:34px;font-weight:700;color:var(--verde);cursor:pointer;box-shadow:0 8px 16px -12px rgba(0,0,0,.3)}
+.teclado button:active{background:var(--verde-claro)}
+.teclado .apagar{font-size:20px;color:var(--vermelho)}
+/* sorteio */
+.sorteio{background:linear-gradient(160deg,#1f5c45,#123126);color:#fff;border-radius:30px;padding:40px 22px;text-align:center;position:relative;overflow:hidden}
+.sorteio small{letter-spacing:3px;text-transform:uppercase;font-weight:800;color:var(--ouro);font-size:15px}
+.sorteio .quem{font-size:clamp(46px,12vw,84px);font-weight:800;letter-spacing:-2px;margin:10px 0 6px;line-height:1.05;word-break:break-word}
+.sorteio p{color:#cfe2d8;margin:0;font-size:18px}
+.roleta{height:110px;display:grid;place-items:center;font-size:clamp(40px,10vw,70px);font-weight:800;margin:14px 0}
+.presente-btn{background:none;border:0;cursor:pointer;display:block;margin:10px auto 0;animation:pula 1.4s ease-in-out infinite}
+@keyframes pula{50%{transform:translateY(-10px) rotate(-3deg)}}
+.confete{position:absolute;width:10px;height:16px;top:-20px;border-radius:2px;animation:cai 2.4s linear forwards}
+@keyframes cai{to{transform:translateY(560px) rotate(720deg);opacity:0}}
+/* editor */
+.escolha{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.escolha button{border:3px solid var(--line);background:#fff;border-radius:20px;padding:20px 14px;cursor:pointer;text-align:center;font-weight:800;font-size:20px;color:var(--verde)}
+.escolha button span{display:block;font-size:38px}
+.escolha button small{display:block;font-weight:500;font-size:15px;color:var(--suave);margin-top:4px}
+.escolha button.on{border-color:var(--verde2);background:var(--verde-claro)}
+.item-ed{background:#fff;border:2px solid var(--line);border-radius:20px;padding:18px;margin-top:14px}
+.item-ed .cab{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.item-ed .cab b{color:var(--verde);font-size:20px}
+textarea,input[type=text],input[type=url],input[type=password],input[type=date]{width:100%;padding:16px;border:2px solid #d9d3c6;border-radius:14px;background:#fff;font-size:19px;outline:none}
+textarea{min-height:84px;resize:vertical}
+textarea:focus,input:focus{border-color:var(--verde2);box-shadow:0 0 0 4px rgba(31,92,69,.12)}
+.item-ed input{margin-top:10px}
+.fav-btn{border:2px solid #e3c07e;background:#fff;color:#7c5913;border-radius:12px;padding:8px 12px;font-weight:700;cursor:pointer;font-size:16px}
+.fav-btn.on{background:#fbe9c2}
+.apagar-btn{border:0;background:none;color:var(--vermelho);font-weight:700;cursor:pointer;font-size:16px;padding:8px}
+.grade{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.grade button{min-width:62px;height:56px;border-radius:14px;border:2px solid var(--line);background:#fff;font-weight:800;font-size:19px;color:var(--verde);cursor:pointer;padding:0 12px}
+.grade button.on{background:var(--verde2);border-color:var(--verde2);color:#fff}
+.rotulo{display:block;font-weight:800;color:var(--verde);font-size:20px;margin-top:22px}
+.rotulo small{font-weight:500;color:var(--suave);font-size:16px}
+.salvar-barra{position:sticky;bottom:0;padding:18px 0 14px;background:linear-gradient(transparent,var(--bg) 30%)}
+/* organizador */
+.abas{display:flex;gap:6px;background:#efeadf;border-radius:16px;padding:6px;margin:22px 0;overflow-x:auto}
+.aba{flex:1;border:0;background:none;padding:12px 14px;border-radius:12px;font-weight:700;color:var(--suave);cursor:pointer;white-space:nowrap;font-size:17px}
 .aba.ativo{background:#fff;color:var(--verde);box-shadow:0 4px 10px -6px rgba(0,0,0,.3)}
-.toggle{display:flex;gap:16px;align-items:center;border:2px dashed #d6c7a8;border-radius:18px;padding:18px 20px;cursor:pointer;background:#fffaf0}
-.toggle.on{border-style:solid;border-color:var(--verde2);background:var(--verde-claro)}
-.toggle input{width:26px;height:26px;accent-color:var(--verde2);flex:none}
-.toggle b{color:var(--verde);font-size:18px}
-.ideia-ed{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;margin-top:12px}
-.ideia-ed .cab{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.fav-lbl{display:inline-flex;gap:8px;align-items:center;font-weight:600;color:#8a6418;cursor:pointer}
-.fav-lbl input{width:20px;height:20px;accent-color:#c79a3c}
-.x{background:none;border:0;color:var(--vermelho);font-weight:700;cursor:pointer;padding:6px}
-.ideia-ed input+input{margin-top:8px}
-.barra-salvar{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);padding:24px 0 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.status{font-size:15px;color:var(--suave)}
-/* resultado */
-.resultado{text-align:center;background:linear-gradient(160deg,#173d31,#1f5c45);color:#fff;border-radius:28px;padding:40px 24px;position:relative;overflow:hidden}
-.resultado small{letter-spacing:3px;text-transform:uppercase;font-weight:800;color:var(--ouro);font-size:13px}
-.resultado .quem{font-size:clamp(40px,9vw,72px);font-weight:800;letter-spacing:-2px;margin:8px 0 4px;color:#fff;line-height:1.05}
-.resultado p{color:#d5e4dc;margin:0}
-.oculto .quem{filter:blur(18px);user-select:none}
-/* admin */
-.adm-lista{display:grid;gap:10px;margin-top:16px}
-.adm-item{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
-.adm-item input{border:0;padding:8px;font-weight:600;min-width:0}
-.adm-item .n{width:30px;height:30px;border-radius:50%;background:var(--verde-claro);color:var(--verde);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
-.rest-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
-.rest-card .chips{margin-top:10px}
+.adm-lista{display:grid;gap:8px;margin-top:14px}
+.adm-item{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 10px}
+.adm-item input{border:0;padding:8px;font-weight:600;min-width:0;box-shadow:none}
+.adm-item .n{width:32px;height:32px;border-radius:50%;background:var(--verde-claro);color:var(--verde);display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+.x{background:none;border:0;color:var(--vermelho);font-weight:700;cursor:pointer;padding:8px;font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:99px;padding:8px 16px;font-weight:600;cursor:pointer;font-size:17px}
 .chip.bloq{background:var(--vermelho-claro);border-color:var(--vermelho);color:var(--vermelho)}
-.status-lista{display:grid;gap:8px;margin-top:14px}
-.status-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;flex-wrap:wrap}
+.rest-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
+.status-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;flex-wrap:wrap;margin-top:8px}
 .link-box{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.link-box input{flex:1;min-width:220px;font-size:15px}
-/* rodapé, toast, loading */
-footer{border-top:1px solid var(--line);margin-top:60px;padding:26px 0;color:var(--suave);font-size:14px}
+.link-box input{flex:1;min-width:220px;font-size:16px;padding:12px}
+.grupos{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;margin-top:20px}
+.check{display:flex;gap:12px;align-items:center;cursor:pointer;margin-top:14px;font-weight:600}
+.check input{width:26px;height:26px;accent-color:var(--verde2);flex:none}
+/* geral */
+footer{border-top:1px solid var(--line);margin-top:50px;padding:22px 0;color:var(--suave);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);background:var(--verde);color:#fff;padding:14px 22px;border-radius:14px;font-weight:600;z-index:99;transition:transform .25s,opacity .25s;opacity:0;pointer-events:none;max-width:92vw;box-shadow:0 14px 30px -10px rgba(0,0,0,.4)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);opacity:0;pointer-events:none;background:var(--verde);color:#fff;padding:16px 24px;border-radius:16px;font-weight:700;z-index:99;transition:transform .25s,opacity .25s;max-width:92vw;font-size:18px;box-shadow:0 14px 30px -10px rgba(0,0,0,.4)}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #toast.erro{background:var(--vermelho)}
-#loading{position:fixed;inset:0;background:rgba(249,246,240,.75);display:none;place-items:center;z-index:98;backdrop-filter:blur(2px)}
+#loading{position:fixed;inset:0;background:rgba(249,246,240,.75);display:none;place-items:center;z-index:98}
 #loading.show{display:grid}
-.spin{width:54px;height:54px;border-radius:50%;border:5px solid var(--verde-claro);border-top-color:var(--verde2);animation:g 0.8s linear infinite}
+.spin{width:56px;height:56px;border-radius:50%;border:6px solid var(--verde-claro);border-top-color:var(--verde2);animation:g .8s linear infinite;margin:0 auto}
 @keyframes g{to{transform:rotate(360deg)}}
-.carregando{padding:120px 0;text-align:center;color:var(--suave)}
+.carregando{padding:110px 0;text-align:center;color:var(--suave)}
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.45);display:grid;place-items:center;z-index:97;padding:20px}
-.modal{background:var(--card);border-radius:22px;padding:28px;max-width:460px;width:100%;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
-.modal h3{margin-bottom:8px}
-.modal .acoes{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
-.voltar{display:inline-flex;gap:6px;align-items:center;margin-top:28px;font-weight:700;text-decoration:none;color:var(--verde)}
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr;padding-top:40px;gap:36px}
-  .hero-tag{left:12px;right:12px}
-  .grid3{grid-template-columns:1fr}
-  .acoes-grupo{grid-template-columns:1fr}
-  section{padding:44px 0}
-}
-@media (max-width:520px){
+.modal{background:var(--card);border-radius:22px;padding:26px;max-width:460px;width:100%}
+.modal .acoes{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+.voltar{display:inline-flex;align-items:center;gap:8px;font-weight:700;text-decoration:none;color:var(--verde);font-size:19px;padding:12px 0;background:none;border:0;cursor:pointer}
+@media (max-width:560px){
+  html,body{font-size:18px}
   .wrap{padding:0 16px}
-  .card{padding:22px}
-  .logo{font-size:17px}
-  .logo .mk{width:38px;height:38px}
-  .btn{width:100%}
-  .top-acoes .btn{width:auto;padding:10px 14px;min-height:42px;font-size:15px}
-  .tam b{font-size:18px}
-  .pin input{width:58px;height:66px}
+  .card{padding:20px}
+  .logo{font-size:17px} .logo .mk{width:36px;height:36px}
+  .grande{padding:22px 18px;gap:14px} .grande .ic{width:60px;height:60px;font-size:34px}
+  .pedidos{grid-template-columns:1fr}
+  .nomes{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-<header class="top">
-  <div class="wrap">
-    <a class="logo" href="#/" aria-label="Início">
-      <span class="mk"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c.8 5 3.2 7.6 8.5 10-5.3 2.4-7.7 5-8.5 10-.8-5-3.2-7.6-8.5-10C8.8 9.6 11.2 7 12 2z" fill="#e9c27c"/></svg></span>
-      <span>Amigo secreto <b>- Digital</b></span>
-    </a>
-    <div class="top-acoes" id="topAcoes"></div>
-  </div>
-</header>
+<header class="top"><div class="wrap">
+  <a class="logo" id="logo" href="#/">
+    <span class="mk"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2c.8 5 3.2 7.6 8.5 10-5.3 2.4-7.7 5-8.5 10-.8-5-3.2-7.6-8.5-10C8.8 9.6 11.2 7 12 2z" fill="#e9c27c"/></svg></span>
+    <span>Amigo secreto <b>- Digital</b></span>
+  </a>
+  <div class="top-acoes" id="topAcoes"></div>
+</div></header>
 
-<main id="app"><div class="carregando"><div class="spin" style="margin:0 auto"></div></div></main>
+<main id="app"><div class="carregando"><div class="spin"></div></div></main>
 
-<footer>
-  <div class="wrap">
-    <span>Amigo secreto - Digital · sem cadastro, sem complicação</span>
-    <span id="versao"></span>
-  </div>
-</footer>
-
+<footer><div class="wrap"><span>Amigo secreto - Digital</span><span id="versao"></span></div></footer>
 <div id="toast"></div>
 <div id="loading"><div class="spin"></div></div>
 
@@ -219,33 +186,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 /* =====================================================================
    COLE AQUI A URL DO APPS SCRIPT (termina em /exec)
    ===================================================================== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbx_TZQ1GHagpTOSJJlUUG9vgxzXkTD1yR8K-JkFMyVztAaEr1NdQg2-9JmpLFQxhZw/exec';
+const API_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
 
-const VERSAO = '1.0.0';
-const DATA_VERSAO = '26/11/2026 15:10';
+const VERSAO = '2.0.0';
+const DATA_VERSAO = '26/11/2026 16:45';
 document.getElementById('versao').textContent = 'Versão ' + VERSAO + ' · ' + DATA_VERSAO;
 
 /* ---------- utilidades ---------- */
 const $app = document.getElementById('app');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const LS = {
-  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
-  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
-  del(k){ try { localStorage.removeItem(k); } catch(e){} }
-};
-const SS = {
-  get(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } },
-  set(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} },
-  del(k){ try { sessionStorage.removeItem(k); } catch(e){} }
-};
+const LS = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }, del(k){ try { localStorage.removeItem(k); } catch(e){} } };
+const SS = { get(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }, del(k){ try { sessionStorage.removeItem(k); } catch(e){} } };
 let toastT;
 function toast(msg, erro){
   const t = document.getElementById('toast');
   t.textContent = msg; t.className = 'show' + (erro ? ' erro' : '');
-  clearTimeout(toastT); toastT = setTimeout(() => t.className = erro ? 'erro' : '', 4200);
+  clearTimeout(toastT); toastT = setTimeout(() => t.className = erro ? 'erro' : '', 4500);
 }
 function carregando(on){ document.getElementById('loading').classList.toggle('show', !!on); }
-
 async function api(acao, dados = {}, silencioso){
   if (!API_URL || API_URL.indexOf('COLE_AQUI') === 0) throw new Error('O site ainda não foi ligado à planilha (API_URL vazia).');
   if (!silencioso) carregando(true);
@@ -255,36 +213,487 @@ async function api(acao, dados = {}, silencioso){
     if (!j.ok) throw new Error(j.erro || 'Erro ao falar com o servidor.');
     return j;
   } catch (e) {
-    if (e instanceof TypeError) throw new Error('Sem conexão com o servidor. Confira a internet e tente de novo.');
+    if (e instanceof TypeError) throw new Error('Sem internet ou servidor fora do ar. Tente de novo.');
     throw e;
   } finally { if (!silencioso) carregando(false); }
 }
-
 function confirmar(titulo, texto, okTxt = 'Confirmar', perigo){
   return new Promise(res => {
-    const bg = document.createElement('div');
-    bg.className = 'modal-bg';
-    bg.innerHTML = `<div class="modal" role="dialog"><h3>${esc(titulo)}</h3><p style="color:var(--suave);margin:0">${texto}</p>
+    const bg = document.createElement('div'); bg.className = 'modal-bg';
+    bg.innerHTML = `<div class="modal"><h3>${esc(titulo)}</h3><p style="color:var(--suave);margin:8px 0 0">${texto}</p>
       <div class="acoes"><button class="btn btn-borda btn-peq" data-r="0">Cancelar</button>
       <button class="btn ${perigo ? 'btn-vermelho' : 'btn-verde'} btn-peq" data-r="1">${esc(okTxt)}</button></div></div>`;
-    bg.addEventListener('click', e => {
-      const b = e.target.closest('[data-r]');
-      if (b || e.target === bg) { bg.remove(); res(b ? b.dataset.r === '1' : false); }
-    });
+    bg.addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (b || e.target === bg){ bg.remove(); res(b ? b.dataset.r === '1' : false); } });
     document.body.appendChild(bg);
   });
 }
+function dataBR(d){ const m = String(d || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : d; }
+const ESTRELA = (c = '#e9c27c', s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path d="M12 2c.8 5 3.2 7.6 8.5 10-5.3 2.4-7.7 5-8.5 10-.8-5-3.2-7.6-8.5-10C8.8 9.6 11.2 7 12 2z" fill="${c}"/></svg>`;
+const PRESENTE = (s = 150) => `<svg width="${s}" height="${s}" viewBox="0 0 120 120"><rect x="18" y="50" width="84" height="58" rx="6" fill="#e9c27c"/><rect x="12" y="36" width="96" height="20" rx="5" fill="#f3d79e"/><rect x="54" y="36" width="12" height="72" fill="#b9483f"/><path d="M60 36c-10-22-36-24-32-8 3 11 20 10 32 8zM60 36c10-22 36-24 32-8-3 11-20 10-32 8z" fill="#b9483f"/><circle cx="60" cy="36" r="6" fill="#8f342d"/></svg>`;
+function dominio(u){ try { return new URL(u).hostname.replace(/^www\./, ''); } catch(e){ return ''; } }
 
-const ESTRELA = (c='#e9c27c', s=24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path d="M12 2c.8 5 3.2 7.6 8.5 10-5.3 2.4-7.7 5-8.5 10-.8-5-3.2-7.6-8.5-10C8.8 9.6 11.2 7 12 2z" fill="${c}"/></svg>`;
-const ICO = {
-  pessoas:`<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1f5c45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.3 3-5 6-5s5.4 1.7 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14c2.3 0 4 1.4 4.5 4"/></svg>`,
-  cadeado:`<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#b9483f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.3"/></svg>`,
-  presente:`<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#a87a22" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="9" width="17" height="11.5" rx="2"/><path d="M2.5 9h19M12 9v11.5M12 9c-1.5-3.5-6-4.3-6-1.6C6 9 9.5 9 12 9zm0 0c1.5-3.5 6-4.3 6-1.6C18 9 14.5 9 12 9z"/></svg>`,
-  lista:`<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#b9483f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>`,
-  eu:`<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1f5c45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg>`
-};
+/* ---------- roteamento ----------
+   #/                       organizador: grupos
+   #/g/ID/organizador       organizador: painel do grupo
+   #/s/ID                   participante: tela inicial do sorteio
+   #/s/ID/eu                participante: nome, senha, sortear
+   #/s/ID/quero             participante: o que quero ganhar
+*/
+window.addEventListener('hashchange', rota);
+function rota(){
+  window.scrollTo(0, 0); window.onbeforeunload = null;
+  document.getElementById('topAcoes').innerHTML = '';
+  const p = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+  const logo = document.getElementById('logo');
+  if (p[0] === 's' && p[1]){
+    logo.setAttribute('href', '#/s/' + p[1]);
+    if (p[2] === 'eu') return telaEu(p[1]);
+    if (p[2] === 'quero') return telaQuero(p[1]);
+    return telaSorteio(p[1]);
+  }
+  logo.setAttribute('href', '#/');
+  if (p[0] === 'g' && p[1]){
+    if (p[2] === 'organizador') return telaOrganizador(p[1]);
+    location.replace('#/s/' + p[1]); return;
+  }
+  return telaInicio();
+}
+function telaErro(msg, voltar){
+  $app.innerHTML = `<div class="wrap"><section><div class="card estreito"><h3>Ops!</h3><p>${esc(msg)}</p>
+    ${voltar ? `<a class="voltar" href="${voltar}">← Voltar</a>` : ''}</div></section></div>`;
+}
+const spinner = txt => `<div class="carregando"><div class="spin"></div><p>${txt || 'Carregando…'}</p></div>`;
 
-/* ---------- sorteio (mesma lógica do servidor, usada para avisar restrições impossíveis) ---------- */
+/* =====================================================================
+   PARTICIPANTE
+   ===================================================================== */
+const sessao = g => { try { return JSON.parse(LS.get('sessao:' + g) || 'null'); } catch(e){ return null; } };
+function sair(g){ LS.del('sessao:' + g); }
+
+function cartaoPedido(p){
+  let corpo = '';
+  const tams = [['Camiseta', p.camiseta], ['Shorts', p.shorts], ['Sapato', p.sapato]].filter(t => t[1]);
+  const tamHtml = tams.length ? `<div class="tams">${tams.map(t => `<span>${t[0]} <b>${esc(t[1])}</b></span>`).join('')}</div>` : '';
+  if (!p.preencheu) corpo = `<p class="nada">Ainda não contou o que quer ganhar.</p>`;
+  else {
+    const itens = (p.ideias || []).slice().sort((a, b) => (b.favorito ? 1 : 0) - (a.favorito ? 1 : 0));
+    corpo = `
+      ${p.surpreenda ? `<div class="surp">🎁 Me surpreenda! Você escolhe o presente.</div>` : ''}
+      ${itens.length ? `<ul class="itens">${itens.map(i => `<li class="${i.favorito ? 'fav' : ''}">
+          ${i.texto ? `<div class="t">${i.favorito ? '⭐ ' : ''}${esc(i.texto)}</div>` : (i.favorito ? '<div class="t">⭐</div>' : '')}
+          ${i.link ? `<a class="loja" href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">🛒 Ver na loja <small>${esc(dominio(i.link))}</small></a>` : ''}
+        </li>`).join('')}</ul>` : ''}
+      ${tamHtml}
+      ${p.cores ? `<p class="dica"><b>Cores:</b> ${esc(p.cores)}</p>` : ''}
+      ${p.dicas ? `<p class="dica"><b>Dica:</b> ${esc(p.dicas)}</p>` : ''}`;
+  }
+  return `<div class="card pedido"><h3>${esc(p.nome)}${p.preencheu ? '' : ' <span class="pill c" style="font-size:14px">aguardando</span>'}</h3>${corpo}</div>`;
+}
+
+async function telaSorteio(g){
+  $app.innerHTML = spinner();
+  let d;
+  try { d = await api('verGrupo', { g }, true); } catch (e){ return telaErro(e.message); }
+  const { grupo, participantes } = d;
+  const s = sessao(g);
+  const eu = s && participantes.find(p => p.pid === s.pid);
+  const ord = participantes.slice().sort((a, b) => (b.preencheu ? 1 : 0) - (a.preencheu ? 1 : 0));
+  const qtd = participantes.filter(p => p.preencheu).length;
+  $app.innerHTML = `<div class="wrap"><section style="padding-top:34px">
+    <p class="eyebrow">${ESTRELA('#b9483f', 18)} Amigo secreto</p>
+    <h1>${esc(grupo.nome)}</h1>
+    <div class="meta">
+      ${grupo.data ? `<span class="pill c">📅 Revelação: ${esc(dataBR(grupo.data))}</span>` : ''}
+      ${grupo.valor ? `<span class="pill c">💰 ${esc(grupo.valor)}</span>` : ''}
+      <span class="pill">${participantes.length} pessoas</span>
+    </div>
+    <a class="grande" href="#/s/${esc(g)}/eu">
+      <span class="ic">${eu ? '🎁' : '👤'}</span>
+      <span class="tx"><b>${eu ? 'Continuar como ' + esc(eu.nome) : 'Quem sou eu?'}</b>
+      <span>${eu ? 'Toque para ver quem você tirou e o que quer ganhar' : 'Toque aqui para sortear e contar o que você quer ganhar'}</span></span>
+    </a>
+    ${eu ? `<button class="link-sim" id="naoSou">Não sou ${esc(eu.nome)}</button>` : ''}
+  </section>
+  <section style="padding-top:6px">
+    <h2>O que cada um quer ganhar</h2>
+    <p class="sub">${qtd ? `${qtd} de ${participantes.length} já contaram. A lista aparece aqui conforme cada um escreve.` : 'Ninguém escreveu ainda. Os pedidos vão aparecer aqui.'}</p>
+    <div class="pedidos">${ord.map(cartaoPedido).join('')}</div>
+  </section></div>`;
+  const ns = document.getElementById('naoSou');
+  if (ns) ns.addEventListener('click', () => { sair(g); telaSorteio(g); });
+}
+
+async function telaEu(g){
+  $app.innerHTML = spinner();
+  let d;
+  try { d = await api('verGrupo', { g }, true); } catch (e){ return telaErro(e.message); }
+  const s = sessao(g);
+  if (s && d.participantes.some(p => p.pid === s.pid)){
+    try { const r = await api('entrar', { g, pid: s.pid, pin: s.pin }, true); return painel(g, d.grupo, r.participante, s.pin); }
+    catch (e){ sair(g); }
+  }
+  telaNomes(g, d);
+}
+
+function telaNomes(g, d){
+  const { grupo, participantes } = d;
+  $app.innerHTML = `<div class="wrap"><section>
+    <p class="eyebrow">${esc(grupo.nome)}</p>
+    <h2>Clique no seu nome</h2>
+    <p class="sub" style="font-size:20px">para registrar sua senha e ver quem você tirou</p>
+    ${participantes.length ? `<div class="nomes">${participantes.map(p => `<button class="nome-btn" data-pid="${esc(p.pid)}">${esc(p.nome)} <small>${p.temPin ? '🔒' : ''}</small></button>`).join('')}</div>`
+      : `<div class="card" style="margin-top:20px">O organizador ainda não colocou os nomes.</div>`}
+    <a class="voltar" href="#/s/${esc(g)}">← Voltar</a>
+  </section></div>`;
+  $app.querySelectorAll('.nome-btn').forEach(b => b.addEventListener('click', () => telaSenha(g, d, participantes.find(x => x.pid === b.dataset.pid))));
+}
+
+function telaSenha(g, d, p){
+  const novo = !p.temPin;
+  let etapa = 1, primeira = '', digitos = '';
+  const titulo = () => novo ? (etapa === 1 ? 'Crie sua senha' : 'Digite a senha de novo') : 'Digite sua senha';
+  const texto = () => novo ? (etapa === 1 ? 'Escolha 4 números fáceis de lembrar. Não conte para ninguém.' : 'Só para confirmar que está certo.') : 'Os 4 números que você criou.';
+  $app.innerHTML = `<div class="wrap"><section><div class="estreito" style="text-align:center">
+    <p class="eyebrow" style="justify-content:center">Olá, ${esc(p.nome)}!</p>
+    <h2 id="sTit"></h2><p class="sub" id="sTxt" style="font-size:19px"></p>
+    <div class="pontos" id="pontos"><i></i><i></i><i></i><i></i></div>
+    <div class="teclado">${[1,2,3,4,5,6,7,8,9].map(n => `<button data-n="${n}">${n}</button>`).join('')}
+      <button class="apagar" data-n="x">⌫ Apagar</button><button data-n="0">0</button><span></span></div>
+    ${novo ? '' : '<p class="sub" style="margin-top:20px">Esqueceu a senha? Fale com o organizador.</p>'}
+    <button class="voltar" id="naoSou">← Não sou ${esc(p.nome)}</button>
+  </div></section></div>`;
+  const desenhar = () => {
+    document.getElementById('sTit').textContent = titulo();
+    document.getElementById('sTxt').textContent = texto();
+    document.querySelectorAll('#pontos i').forEach((i, k) => i.classList.toggle('on', k < digitos.length));
+  };
+  const erro = msg => { toast(msg, true); const pt = document.getElementById('pontos'); pt.classList.remove('erro'); void pt.offsetWidth; pt.classList.add('erro'); digitos = ''; desenhar(); };
+  desenhar();
+  let ocupado = false;
+  async function completo(){
+    if (novo && etapa === 1){ primeira = digitos; etapa = 2; digitos = ''; return desenhar(); }
+    if (novo && digitos !== primeira){ etapa = 1; primeira = ''; return erro('As senhas não ficaram iguais. Crie de novo.'); }
+    ocupado = true;
+    try {
+      const r = await api(novo ? 'criarPin' : 'entrar', { g, pid: p.pid, pin: digitos });
+      LS.set('sessao:' + g, JSON.stringify({ pid: p.pid, pin: digitos }));
+      if (novo) toast('Senha criada!');
+      painel(g, d.grupo, r.participante, digitos);
+    } catch (e){ erro(e.message); }
+    ocupado = false;
+  }
+  const tecla = n => {
+    if (ocupado) return;
+    if (n === 'x') digitos = digitos.slice(0, -1);
+    else if (digitos.length < 4) digitos += n;
+    desenhar();
+    if (digitos.length === 4) setTimeout(completo, 150);
+  };
+  $app.querySelectorAll('.teclado button').forEach(b => b.addEventListener('click', () => tecla(b.dataset.n)));
+  document.onkeydown = e => { if (!document.getElementById('pontos')) { document.onkeydown = null; return; } if (/^\d$/.test(e.key)) tecla(e.key); if (e.key === 'Backspace') tecla('x'); };
+  document.getElementById('naoSou').addEventListener('click', () => telaNomes(g, d));
+}
+
+async function painel(g, grupo, eu, pin){
+  document.getElementById('topAcoes').innerHTML = `<button class="btn btn-borda btn-peq" id="sair">Sair</button>`;
+  document.getElementById('sair').addEventListener('click', () => { sair(g); location.hash = '#/s/' + g; });
+  $app.innerHTML = `<div class="wrap"><section style="padding-top:30px"><div class="estreito">
+    <p class="eyebrow">${esc(grupo.nome)}</p>
+    <h2>Olá, ${esc(eu.nome)}!</h2>
+    <div id="areaSorteio" style="margin-top:20px">${spinner('')}</div>
+    <div id="areaEu"></div>
+    <a class="voltar" href="#/s/${esc(g)}">← Ver o que cada um quer ganhar</a>
+  </div></section></div>`;
+  // minha lista
+  document.getElementById('areaEu').innerHTML = eu.preencheu
+    ? `<div class="card" style="margin-top:24px"><h3>✓ Você já contou o que quer ganhar</h3>
+        <p class="sub">Pode mudar quando quiser.</p>
+        <a class="btn btn-borda btn-full" style="margin-top:16px" href="#/s/${esc(g)}/quero">✏️ Mudar o que eu quero ganhar</a></div>`
+    : `<div class="card" style="margin-top:24px;border:3px solid var(--ouro);background:#fffaee">
+        <h3>Falta uma coisa…</h3><p style="font-size:20px;margin:6px 0 0">Conte o que você quer ganhar!</p>
+        <a class="btn btn-ouro btn-full" style="margin-top:16px" href="#/s/${esc(g)}/quero">🎁 Contar o que eu quero ganhar</a></div>`;
+  // sorteio
+  const area = document.getElementById('areaSorteio');
+  let gr = grupo;
+  try { gr = (await api('verGrupo', { g }, true)).grupo; } catch (e){}
+  if (!gr.sorteado){
+    area.innerHTML = `<div class="card" style="text-align:center"><div style="font-size:54px">⏳</div>
+      <h3>O sorteio ainda não foi liberado</h3><p class="sub">Quando o organizador liberar, volte aqui para sortear quem você vai presentear.</p></div>`;
+    return;
+  }
+  let r;
+  try { r = await api('meuResultado', { g, pid: eu.pid, pin }, true); }
+  catch (e){ area.innerHTML = `<div class="aviso r">${esc(e.message)}</div>`; return; }
+  if (r.visto) return mostrarResultado(area, g, gr, eu, r);
+  area.innerHTML = `<div class="sorteio">
+    <small>Sua vez de sortear</small>
+    <button class="presente-btn" id="btnSortear" aria-label="Sortear">${PRESENTE(160)}</button>
+    <p style="font-size:22px;color:#fff;font-weight:700;margin-top:8px">Toque no presente para sortear!</p>
+    <p style="margin-top:6px">Veja se ninguém está olhando a sua tela 👀</p>
+  </div>`;
+  document.getElementById('btnSortear').addEventListener('click', () => girar(area, g, gr, eu, pin, r));
+}
+
+function girar(area, g, gr, eu, pin, r){
+  const nomes = r.nomes.length ? r.nomes : [r.tirou.nome];
+  area.innerHTML = `<div class="sorteio"><small>Sorteando…</small><div class="roleta" id="roleta"></div><p>🥁</p></div>`;
+  const el = document.getElementById('roleta');
+  let i = Math.floor(Math.random() * nomes.length), atraso = 60, total = 0;
+  const passo = () => {
+    el.textContent = nomes[i++ % nomes.length];
+    total += atraso;
+    if (total < 3000){ atraso *= 1.08; setTimeout(passo, atraso); }
+    else setTimeout(() => {
+      api('marcarVisto', { g, pid: eu.pid, pin }, true).catch(() => {});
+      mostrarResultado(area, g, gr, eu, r, true);
+    }, atraso);
+  };
+  passo();
+}
+
+function mostrarResultado(area, g, gr, eu, r, festa){
+  const alvo = r.tirou;
+  area.innerHTML = `<div class="sorteio" id="caixaRes">
+      <small>Você tirou</small>
+      <div class="quem">${esc(alvo.nome)}</div>
+      <p>Shhh… é segredo! 🤫</p>
+    </div>
+    <div class="aviso o" style="font-size:18px"><b>⬇ Baixe a imagem</b> e guarde no celular para não esquecer quem você tirou.</div>
+    <button class="btn btn-verde btn-full" id="baixar" style="margin-top:12px">⬇ Baixar imagem</button>
+    <div style="margin-top:24px">
+      ${alvo.preencheu ? `<h3>${esc(alvo.nome)} gostaria de ganhar:</h3>` : ''}
+      ${alvo.preencheu ? cartaoPedido(alvo).replace(/<h3>[\s\S]*?<\/h3>/, '') : `<div class="card"><h3>${esc(alvo.nome)} ainda não contou o que quer ganhar</h3><p class="sub">Volte aqui mais tarde para ver as sugestões.</p></div>`}
+    </div>`;
+  document.getElementById('baixar').addEventListener('click', () => baixarImagem(eu.nome, alvo, gr));
+  if (festa){
+    const cx = document.getElementById('caixaRes');
+    const cores = ['#e9c27c', '#b9483f', '#ffffff', '#8fd0a8'];
+    for (let k = 0; k < 60; k++){
+      const c = document.createElement('i'); c.className = 'confete';
+      c.style.left = Math.random() * 100 + '%'; c.style.background = cores[k % 4];
+      c.style.animationDelay = Math.random() * .8 + 's'; c.style.animationDuration = 1.8 + Math.random() * 1.4 + 's';
+      cx.appendChild(c);
+    }
+  }
+}
+
+/* ---------- o que eu quero ganhar ---------- */
+const TAM_CAMISETA = ['PP','P','M','G','GG','XG','XGG'];
+const TAM_SHORTS = ['PP','P','M','G','GG','XG','XGG','36','38','40','42','44','46','48','50'];
+const TAM_SAPATO = Array.from({ length: 16 }, (_, i) => String(31 + i));
+
+async function telaQuero(g){
+  const s = sessao(g);
+  if (!s){ location.replace('#/s/' + g + '/eu'); return; }
+  $app.innerHTML = spinner();
+  let eu, grupo;
+  try {
+    const r = await api('entrar', { g, pid: s.pid, pin: s.pin }, true); eu = r.participante;
+    grupo = (await api('verGrupo', { g }, true)).grupo;
+  } catch (e){ sair(g); location.replace('#/s/' + g + '/eu'); return; }
+  let surpreenda = eu.surpreenda;
+  let itens = (eu.ideias || []).map(i => Object.assign({}, i));
+  if (!itens.length) itens.push({ texto:'', link:'', favorito:false });
+  const tam = { camiseta: eu.camiseta || '', shorts: eu.shorts || '', sapato: eu.sapato || '' };
+  let mudou = false;
+  const sujo = () => { mudou = true; window.onbeforeunload = () => true; };
+
+  $app.innerHTML = `<div class="wrap"><section style="padding-top:28px"><div class="estreito">
+    <a class="voltar" href="#/s/${esc(g)}/eu" style="padding-top:0">← Voltar</a>
+    <h2>O que você quer ganhar?</h2>
+    <p class="sub">Nada é obrigatório. Escreva do seu jeito.</p>
+    <div class="escolha">
+      <button id="opSug"><span>✍️</span>Vou dar sugestões<small>Escrevo o que quero</small></button>
+      <button id="opSur"><span>🎁</span>Me surpreenda<small>Quem me tirou escolhe</small></button>
+    </div>
+    <div id="blocoSug"></div>
+    <div id="avisoSur"></div>
+    <div class="card" style="margin-top:22px">
+      <h3>Seus tamanhos</h3>
+      <p class="sub" id="tamInfo"></p>
+      ${['camiseta','shorts','sapato'].map(k => `<span class="rotulo">${k[0].toUpperCase() + k.slice(1)}</span>
+        <div class="grade" data-k="${k}">${({camiseta:TAM_CAMISETA, shorts:TAM_SHORTS, sapato:TAM_SAPATO})[k].map(v => `<button data-v="${v}">${v}</button>`).join('')}</div>`).join('')}
+      <span class="rotulo">Alguma dica? <small>(cores, gostos, o que não gosta)</small></span>
+      <textarea id="dicas" maxlength="500" placeholder="Ex.: gosto de azul, não bebo café">${esc([eu.cores, eu.dicas].filter(Boolean).join(eu.cores && eu.dicas ? '. ' : ''))}</textarea>
+    </div>
+    <div class="salvar-barra"><button class="btn btn-verde btn-full" id="salvar">✓ Salvar</button></div>
+  </div></section></div>`;
+
+  function desenharModo(){
+    document.getElementById('opSug').classList.toggle('on', !surpreenda);
+    document.getElementById('opSur').classList.toggle('on', surpreenda);
+    document.getElementById('blocoSug').style.display = surpreenda ? 'none' : '';
+    document.getElementById('avisoSur').innerHTML = surpreenda ? `<div class="aviso v" style="font-size:18px">🎁 Combinado! Quem te tirou vai escolher. <b>Só falta escolher os 3 tamanhos abaixo.</b></div>` : '';
+    document.getElementById('tamInfo').innerHTML = surpreenda ? '<b style="color:var(--vermelho)">Obrigatório: toque nos 3 tamanhos.</b>' : 'Opcional. Ajuda quem vai te dar roupa ou calçado.';
+  }
+  function desenharItens(){
+    const b = document.getElementById('blocoSug');
+    b.innerHTML = itens.map((i, k) => `<div class="item-ed" data-k="${k}">
+        <div class="cab"><b>Presente ${k + 1}</b>
+          <span><button class="fav-btn ${i.favorito ? 'on' : ''}" data-fav="${k}">⭐ ${i.favorito ? 'O que mais quero' : 'Mais quero?'}</button>
+          <button class="apagar-btn" data-rm="${k}">Apagar</button></span></div>
+        <textarea class="txt" maxlength="150" placeholder="Ex.: camiseta preta, jogo de facas…">${esc(i.texto)}</textarea>
+        <input type="url" class="lnk" maxlength="500" inputmode="url" placeholder="Link da loja (opcional)" value="${esc(i.link)}">
+      </div>`).join('') +
+      (itens.length < 5 ? `<button class="btn btn-borda btn-full" id="mais" style="margin-top:14px">+ Quero mais uma coisa</button>` : '<p class="sub" style="margin-top:12px">Máximo de 5 presentes.</p>');
+    const mais = document.getElementById('mais');
+    if (mais) mais.addEventListener('click', () => { itens.push({ texto:'', link:'', favorito:false }); desenharItens(); sujo(); b.querySelector('.item-ed:last-of-type .txt').focus(); });
+  }
+  const blocoSug = document.getElementById('blocoSug');
+  blocoSug.addEventListener('input', e => {
+    const el = e.target.closest('.item-ed'); if (!el) return;
+    const k = +el.dataset.k;
+    if (e.target.classList.contains('txt')) itens[k].texto = e.target.value;
+    if (e.target.classList.contains('lnk')) itens[k].link = e.target.value;
+    sujo();
+  });
+  blocoSug.addEventListener('click', e => {
+    const f = e.target.closest('[data-fav]'), rm = e.target.closest('[data-rm]');
+    if (f){ const k = +f.dataset.fav, ja = itens[k].favorito; itens.forEach(i => i.favorito = false); itens[k].favorito = !ja; desenharItens(); sujo(); }
+    if (rm){ itens.splice(+rm.dataset.rm, 1); if (!itens.length) itens.push({ texto:'', link:'', favorito:false }); desenharItens(); sujo(); }
+  });
+  document.getElementById('opSug').addEventListener('click', () => { surpreenda = false; desenharModo(); sujo(); });
+  document.getElementById('opSur').addEventListener('click', () => { surpreenda = true; desenharModo(); sujo(); });
+  $app.querySelectorAll('.grade').forEach(gd => {
+    const k = gd.dataset.k;
+    const pintar = () => gd.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === tam[k]));
+    pintar();
+    gd.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tam[k] = tam[k] === b.dataset.v ? '' : b.dataset.v; pintar(); sujo(); });
+  });
+  document.getElementById('dicas').addEventListener('input', sujo);
+  desenharModo(); desenharItens();
+
+  document.getElementById('salvar').addEventListener('click', async () => {
+    if (surpreenda && (!tam.camiseta || !tam.shorts || !tam.sapato)){
+      toast('Para "Me surpreenda", toque nos 3 tamanhos: camiseta, shorts e sapato.', true);
+      document.querySelector(`.grade[data-k="${['camiseta','shorts','sapato'].find(k => !tam[k])}"]`).scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+    // separa link colado dentro do texto
+    const lista = itens.map(i => {
+      let texto = (i.texto || '').trim(), link = (i.link || '').trim();
+      if (!link){ const m = texto.match(/(https?:\/\/\S+|www\.\S+)/i); if (m){ link = m[1]; texto = texto.replace(m[1], '').trim().replace(/[-–:]\s*$/, '').trim(); } }
+      return { texto, link, favorito: !!i.favorito };
+    }).filter(i => i.texto || i.link);
+    try {
+      await api('salvarLista', { g, pid: eu.pid, pin: s.pin, dados: { surpreenda, camiseta: tam.camiseta, shorts: tam.shorts, sapato: tam.sapato, cores: '', dicas: document.getElementById('dicas').value, ideias: lista } });
+      window.onbeforeunload = null;
+      toast('Salvo! ✓');
+      location.hash = '#/s/' + g + '/eu';
+    } catch (e){ toast(e.message, true); }
+  });
+}
+
+/* ---------- imagem para baixar ---------- */
+function baixarImagem(meuNome, alvo, grupo){
+  const W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d'), fonte = '"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif';
+  const grad = x.createLinearGradient(0, 0, W, H); grad.addColorStop(0, '#1f5c45'); grad.addColorStop(1, '#122f26');
+  x.fillStyle = grad; x.fillRect(0, 0, W, H);
+  const estrela = (cx, cy, r, cor, a) => { x.save(); x.globalAlpha = a; x.fillStyle = cor; x.beginPath();
+    x.moveTo(cx, cy - r); x.quadraticCurveTo(cx + r * .12, cy - r * .12, cx + r * .9, cy); x.quadraticCurveTo(cx + r * .12, cy + r * .12, cx, cy + r);
+    x.quadraticCurveTo(cx - r * .12, cy + r * .12, cx - r * .9, cy); x.quadraticCurveTo(cx - r * .12, cy - r * .12, cx, cy - r); x.fill(); x.restore(); };
+  let sd = 7; const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < 38; i++) estrela(rnd() * W, rnd() * H, 6 + rnd() * 16, '#e9c27c', .15 + rnd() * .35);
+  const rr = (X, Y, w, h, r) => { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); };
+  x.fillStyle = '#fffdf8'; rr(90, 250, W - 180, 760, 46); x.fill();
+  x.fillStyle = '#b9483f'; x.fillRect(W / 2 - 28, 250, 56, 760);
+  x.fillStyle = '#fffdf8'; rr(150, 460, W - 300, 520, 30); x.fill();
+  x.textAlign = 'center';
+  x.fillStyle = '#e9c27c'; x.font = `800 34px ${fonte}`; x.fillText('AMIGO SECRETO', W / 2, 120);
+  x.fillStyle = '#ffffff'; x.font = `700 44px ${fonte}`; x.fillText(cortar(x, grupo.nome, W - 160), W / 2, 185);
+  x.fillStyle = '#5f6964'; x.font = `600 38px ${fonte}`; x.fillText(cortar(x, meuNome + ', você tirou:', W - 380), W / 2, 545);
+  x.fillStyle = '#173d31'; let t = 130; x.font = `800 ${t}px ${fonte}`;
+  while (x.measureText(alvo.nome).width > W - 400 && t > 50){ t -= 4; x.font = `800 ${t}px ${fonte}`; }
+  x.fillText(cortar(x, alvo.nome, W - 380), W / 2, 680);
+  estrela(W / 2, 745, 26, '#b9483f', 1);
+  const tams = [['Camiseta', alvo.camiseta], ['Shorts', alvo.shorts], ['Sapato', alvo.sapato]];
+  if (tams.some(v => v[1])){
+    tams.forEach((v, i) => { const cx = 290 + i * 250;
+      x.fillStyle = '#f2ede3'; rr(cx - 105, 830, 210, 120, 24); x.fill();
+      x.fillStyle = '#5f6964'; x.font = `700 24px ${fonte}`; x.fillText(v[0].toUpperCase(), cx, 873);
+      x.fillStyle = '#173d31'; x.font = `800 42px ${fonte}`; x.fillText(v[1] || '—', cx, 925); });
+  } else { x.fillStyle = '#5f6964'; x.font = `600 30px ${fonte}`; x.fillText('Veja o que a pessoa quer ganhar no site', W / 2, 900); }
+  const info = [grupo.data ? 'Revelação: ' + dataBR(grupo.data) : '', grupo.valor || ''].filter(Boolean).join('   ·   ');
+  x.fillStyle = '#ffffff'; x.font = `600 34px ${fonte}`; if (info) x.fillText(info, W / 2, 1095);
+  x.fillStyle = '#e9c27c'; x.font = `700 30px ${fonte}`; x.fillText('Shhh… é segredo! 🤫', W / 2, 1170);
+  x.fillStyle = 'rgba(255,255,255,.6)'; x.font = `600 24px ${fonte}`; x.fillText('Amigo secreto - Digital', W / 2, 1280);
+  cv.toBlob(blob => {
+    const nome = 'amigo-secreto-' + meuNome.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.png';
+    const url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    toast('Imagem baixada! Veja na galeria ou em Downloads.');
+  }, 'image/png');
+}
+function cortar(x, t, max){ t = String(t || ''); if (x.measureText(t).width <= max) return t; while (t.length > 1 && x.measureText(t + '…').width > max) t = t.slice(0, -1); return t + '…'; }
+
+/* =====================================================================
+   ORGANIZADOR
+   ===================================================================== */
+const mestre = () => LS.get('mestre') || SS.get('mestre');
+
+function telaLoginMestre(depois){
+  $app.innerHTML = `<div class="wrap"><section><div class="card estreito">
+    <p class="eyebrow">Área do organizador</p>
+    <h2>Digite a senha do organizador</h2>
+    <p class="sub">É a senha que está no Apps Script (SENHA_MESTRE).</p>
+    <form id="fM"><input type="password" name="s" required autofocus style="margin-top:18px">
+      <label class="check"><input type="checkbox" name="lem" checked> Lembrar neste computador</label>
+      <button class="btn btn-verde btn-full" style="margin-top:18px">Entrar</button></form>
+  </div></section></div>`;
+  document.getElementById('fM').addEventListener('submit', async e => {
+    e.preventDefault(); const f = new FormData(e.target), s = f.get('s');
+    try { await api('entrarMestre', { mestre: s }); (f.get('lem') ? LS : SS).set('mestre', s); depois(); }
+    catch (err){ toast(err.message, true); }
+  });
+}
+function sairMestre(){ LS.del('mestre'); SS.del('mestre'); location.hash = '#/'; rota(); }
+
+async function telaInicio(){
+  const m = mestre();
+  if (!m) return telaLoginMestre(telaInicio);
+  $app.innerHTML = spinner();
+  let d;
+  try { d = await api('listarGrupos', { mestre: m }, true); }
+  catch (e){ if (/senha/i.test(e.message)){ sairMestre(); return; } return telaErro(e.message); }
+  document.getElementById('topAcoes').innerHTML = `<button class="btn btn-borda btn-peq" id="sairM">Sair</button>`;
+  document.getElementById('sairM').addEventListener('click', sairMestre);
+  $app.innerHTML = `<div class="wrap"><section>
+    <p class="eyebrow">${ESTRELA('#b9483f', 18)} Área do organizador</p>
+    <h1>Seus amigos secretos</h1>
+    <p class="sub">${d.grupos.length} de ${d.max} grupos usados. Só você vê esta página.</p>
+    <div class="grupos">${d.grupos.map(gr => `<a class="card" style="text-decoration:none;color:inherit" href="#/g/${esc(gr.id)}/organizador">
+      <h3>${esc(gr.nome)}</h3>
+      <div class="meta"><span class="pill">${gr.total} pessoas</span>${gr.sorteado ? '<span class="pill r">Sorteio liberado</span>' : '<span class="pill o">Montando</span>'}
+      ${gr.data ? `<span class="pill c">📅 ${esc(dataBR(gr.data))}</span>` : ''}</div>
+      <p style="font-weight:700;color:var(--verde);margin:14px 0 0">Abrir →</p></a>`).join('')}</div>
+  </section>
+  <section style="padding-top:0"><div class="card estreito" style="margin:0" id="criar"></div></section></div>`;
+  const box = document.getElementById('criar');
+  if (d.grupos.length >= d.max){ box.innerHTML = `<h3>Limite de ${d.max} grupos</h3><p class="sub">Para criar outro, abra um grupo antigo e apague em "Ajustes".</p>`; return; }
+  box.innerHTML = `<h3>Criar novo amigo secreto</h3>
+    <form id="fC">
+      <span class="rotulo">Nome do grupo</span><input type="text" name="nome" maxlength="60" required placeholder="Ex.: Família Natal 2026">
+      <span class="rotulo">Data da revelação <small>(opcional)</small></span><input type="date" name="data">
+      <span class="rotulo">Valor sugerido <small>(opcional)</small></span><input type="text" name="valor" maxlength="30" placeholder="Ex.: até R$ 80">
+      <button class="btn btn-verde btn-full" style="margin-top:22px">Criar grupo</button></form>`;
+  document.getElementById('fC').addEventListener('submit', async e => {
+    e.preventDefault(); const f = new FormData(e.target);
+    try { const r = await api('criarGrupo', { mestre: m, nome: f.get('nome'), data: f.get('data'), valor: f.get('valor') });
+      toast('Grupo criado! Agora coloque os nomes.'); location.hash = '#/g/' + r.id + '/organizador'; }
+    catch (err){ toast(err.message, true); }
+  });
+}
+
+async function telaOrganizador(g){
+  const m = mestre();
+  if (!m) return telaLoginMestre(() => telaOrganizador(g));
+  $app.innerHTML = spinner();
+  try { const d = await api('admEntrar', { g, senha: m }, true); painelAdm(g, m, d, 'nomes'); }
+  catch (e){ if (/senha/i.test(e.message)){ LS.del('mestre'); SS.del('mestre'); return telaLoginMestre(() => telaOrganizador(g)); } telaErro(e.message, '#/'); }
+}
+
 function existeSorteio(ids, proib){
   if (ids.length < 2) return false;
   const dono = {};
@@ -292,584 +701,29 @@ function existeSorteio(ids, proib){
     for (const b of ids){
       if (b === a || proib[a + '|' + b] || visit[b]) continue;
       visit[b] = true;
-      if (!dono[b] || tentar(dono[b], visit)) { dono[b] = a; return true; }
+      if (!dono[b] || tentar(dono[b], visit)){ dono[b] = a; return true; }
     }
     return false;
   }
   return ids.every(a => tentar(a, {}));
 }
 
-/* ---------- roteamento ---------- */
-window.addEventListener('hashchange', rota);
-function rota(){
-  window.scrollTo(0, 0);
-  window.onbeforeunload = null;
-  document.getElementById('topAcoes').innerHTML = '';
-  const partes = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  if (partes[0] === 'g' && partes[1]){
-    const g = partes[1];
-    if (partes[2] === 'eu') return telaParticipante(g);
-    if (partes[2] === 'organizador') return telaOrganizador(g);
-    return telaGrupo(g, partes[2] === 'lista' ? partes[3] : null);
-  }
-  return telaInicio();
-}
-
-function telaErro(msg){
-  $app.innerHTML = `<div class="wrap"><section><div class="card form-card"><h3>Ops!</h3><p>${esc(msg)}</p>
-    <a class="voltar" href="#/">← Voltar ao início</a></div></section></div>`;
-}
-
-/* =====================================================================
-   INÍCIO
-   ===================================================================== */
-async function telaInicio(){
-  $app.innerHTML = `
-  <div class="wrap">
-    <div class="hero">
-      <div>
-        <p class="eyebrow">${ESTRELA('#b9483f', 18)} Menos trabalho. Mais surpresa.</p>
-        <h1>Seu amigo secreto online com <em>sorteio sem repetir.</em></h1>
-        <p class="lead">Cadastre os nomes, defina quem não pode tirar quem e mande o link. Cada pessoa monta a lista de presentes e, depois do sorteio, vê só quem ela tirou e baixa a imagem.</p>
-        <div class="hero-btns">
-          <a class="btn btn-verde" href="#criar">Criar meu amigo secreto ↗</a>
-          <a class="btn btn-borda" href="#grupos">Já tenho um grupo →</a>
-        </div>
-      </div>
-      <div class="hero-img">
-        ${ILUSTRACAO}
-        <div class="hero-tag"><span class="mk">${ESTRELA('#e9c27c', 26)}</span>
-          <div><strong>Você organiza. A surpresa aproxima.</strong><small>Para família, amigos ou equipe.</small></div></div>
-      </div>
-    </div>
-  </div>
-
-  <section><div class="wrap">
-    <p class="eyebrow">Simples do começo ao fim</p>
-    <h2>Como fazer seu amigo secreto</h2>
-    <p class="sub">Você organiza tudo em um só lugar. Cada participante recebe apenas o próprio resultado.</p>
-    <div class="grid3">
-      <div class="card"><div class="passo-top"><span class="ico v">${ICO.pessoas}</span><span class="num">01</span></div>
-        <h3>Coloque os nomes</h3><p>Escreva o nome de todo mundo e, se quiser, diga quem não pode tirar quem (casais, irmãos…).</p></div>
-      <div class="card"><div class="passo-top"><span class="ico r">${ICO.lista}</span><span class="num">02</span></div>
-        <h3>Mande o link</h3><p>Cada pessoa escolhe o próprio nome, cria um PIN e monta a lista de presentes ou marca "Me surpreenda".</p></div>
-      <div class="card"><div class="passo-top"><span class="ico o">${ICO.presente}</span><span class="num">03</span></div>
-        <h3>Sorteie e revele</h3><p>Ninguém tira a si mesmo nem repete nome. Cada pessoa vê só quem tirou e baixa a imagem.</p></div>
-    </div>
-  </div></section>
-
-  <section id="grupos" style="padding-top:10px"><div class="wrap">
-    <p class="eyebrow">Seus grupos</p>
-    <h2>Grupos de amigo secreto</h2>
-    <p class="sub" id="gruposInfo">Carregando…</p>
-    <div class="lista-grupos" id="listaGrupos"></div>
-  </div></section>
-
-  <section id="criar" style="padding-top:10px"><div class="wrap">
-    <div class="card form-card" id="criarBox"></div>
-  </div></section>`;
-
-  document.querySelectorAll('a[href="#criar"],a[href="#grupos"]').forEach(a => a.addEventListener('click', e => {
-    e.preventDefault(); document.getElementById(a.getAttribute('href').slice(1)).scrollIntoView({ behavior:'smooth' });
-  }));
-
-  let dados;
-  try { dados = await api('listarGrupos', {}, true); }
-  catch (e){
-    document.getElementById('gruposInfo').innerHTML = `<span class="aviso r" style="display:block">${esc(e.message)}</span>`;
-    document.getElementById('criarBox').innerHTML = `<h3>Criar grupo</h3><p>Ligue o site à planilha para criar grupos.</p>`;
-    return;
-  }
-  const lg = document.getElementById('listaGrupos');
-  document.getElementById('gruposInfo').textContent = dados.grupos.length
-    ? `Você está usando ${dados.grupos.length} de ${dados.max} grupos. Clique em um grupo para abrir.`
-    : 'Nenhum grupo criado ainda. Crie o primeiro logo abaixo.';
-  lg.innerHTML = dados.grupos.map(g => `
-    <a class="card grupo-card" href="#/g/${esc(g.id)}">
-      <h3>${esc(g.nome)}</h3>
-      <div class="meta">
-        <span class="pill">${g.total} ${g.total === 1 ? 'pessoa' : 'pessoas'}</span>
-        ${g.sorteado ? '<span class="pill r">Sorteio feito</span>' : '<span class="pill o">Aguardando sorteio</span>'}
-        ${g.data ? `<span class="pill c">📅 ${esc(dataBR(g.data))}</span>` : ''}
-      </div>
-      <span style="margin-top:10px;font-weight:700;color:var(--verde)">Abrir grupo →</span>
-    </a>`).join('');
-
-  const box = document.getElementById('criarBox');
-  if (dados.grupos.length >= dados.max){
-    box.innerHTML = `<h3>Limite de grupos atingido</h3><p>Você já tem ${dados.max} grupos. Para criar outro, entre na Área do organizador de um grupo antigo e apague-o.</p>`;
-    return;
-  }
-  box.innerHTML = `
-    <p class="eyebrow">Novo grupo</p>
-    <h3 style="font-size:30px">Criar amigo secreto</h3>
-    <p>Só quem organiza precisa preencher isto. Os participantes não criam conta.</p>
-    <form id="fCriar">
-      <label class="campo"><span>Nome do grupo</span><input type="text" name="nome" maxlength="60" placeholder="Ex.: Amigo secreto da família" required></label>
-      <label class="campo"><span>Senha do organizador</span><input type="password" name="senha" minlength="4" required placeholder="Mínimo 4 caracteres">
-        <small>Guarde bem: é com ela que você mexe nos nomes e faz o sorteio.</small></label>
-      <div class="linha">
-        <label class="campo"><span>Data da revelação <small style="display:inline;font-weight:400">(opcional)</small></span><input type="date" name="data" style="width:100%;padding:13px 14px;border:1.5px solid #d9d3c6;border-radius:12px;background:#fff"></label>
-        <label class="campo"><span>Valor sugerido <small style="display:inline;font-weight:400">(opcional)</small></span><input type="text" name="valor" maxlength="30" placeholder="Ex.: até R$ 80"></label>
-      </div>
-      <button class="btn btn-verde" style="margin-top:24px">Criar grupo ↗</button>
-    </form>`;
-  document.getElementById('fCriar').addEventListener('submit', async e => {
-    e.preventDefault();
-    const f = new FormData(e.target);
-    try {
-      const r = await api('criarGrupo', { nome: f.get('nome'), senha: f.get('senha'), data: f.get('data'), valor: f.get('valor') });
-      SS.set('adm:' + r.id, f.get('senha'));
-      toast('Grupo criado! Agora coloque os nomes.');
-      location.hash = '#/g/' + r.id + '/organizador';
-    } catch (err){ toast(err.message, true); }
-  });
-}
-
-function dataBR(d){
-  const m = String(d || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : d;
-}
-
-/* =====================================================================
-   PÁGINA DO GRUPO (lista de presentes de todos)
-   ===================================================================== */
-async function telaGrupo(g, pidSel){
-  $app.innerHTML = `<div class="carregando"><div class="spin" style="margin:0 auto"></div><p>Carregando o grupo…</p></div>`;
-  let d;
-  try { d = await api('verGrupo', { g }, true); } catch (e){ return telaErro(e.message); }
-  const { grupo, participantes } = d;
-  document.getElementById('topAcoes').innerHTML = `<a class="btn btn-verde btn-peq" href="#/g/${esc(g)}/eu">Sou participante</a>`;
-  const preench = participantes.filter(p => p.preencheu).length;
-
-  $app.innerHTML = `
-  <div class="wrap">
-    <div class="g-hero">
-      <p class="eyebrow">${ESTRELA('#b9483f', 18)} Amigo secreto</p>
-      <h2 style="font-size:clamp(36px,6vw,64px)">${esc(grupo.nome)}</h2>
-      <div class="meta" style="margin-top:16px">
-        <span class="pill">${participantes.length} participantes</span>
-        ${grupo.sorteado ? '<span class="pill r">✓ Sorteio feito</span>' : '<span class="pill o">Aguardando sorteio</span>'}
-        ${grupo.data ? `<span class="pill c">📅 Revelação: ${esc(dataBR(grupo.data))}</span>` : ''}
-        ${grupo.valor ? `<span class="pill c">💰 ${esc(grupo.valor)}</span>` : ''}
-      </div>
-      <div class="acoes-grupo">
-        <a class="card acao" href="#/g/${esc(g)}/eu"><span class="ico v">${ICO.eu}</span>
-          <div><h3>Sou participante</h3><p>${grupo.sorteado ? 'Veja quem você tirou e baixe a imagem.' : 'Escolha seu nome e monte sua lista de presentes.'}</p></div></a>
-        <a class="card acao" href="#lista" id="irLista"><span class="ico r">${ICO.lista}</span>
-          <div><h3>Lista de presentes</h3><p>Escolha um nome e veja o que a pessoa gostaria de ganhar.</p></div></a>
-      </div>
-    </div>
-  </div>
-
-  <section id="lista"><div class="wrap">
-    <p class="eyebrow">Menos dúvida na hora de presentear</p>
-    <h2>Lista de presentes</h2>
-    <p class="sub">Toque no nome da pessoa para ver as ideias, tamanhos e cores. ${preench} de ${participantes.length} já preencheram.</p>
-    ${participantes.length ? `
-      <label class="campo" style="max-width:420px"><span>Escolha um nome</span>
-        <select id="selNome"><option value="">— Selecione —</option>
-        ${participantes.map(p => `<option value="${esc(p.pid)}">${esc(p.nome)}${p.preencheu ? '' : ' (ainda não preencheu)'}</option>`).join('')}</select></label>
-      <div class="chips" id="chipsNomes">${participantes.map(p => `<button class="chip ${p.preencheu ? '' : 'pend'}" data-pid="${esc(p.pid)}">${p.preencheu ? '<span class="ok">✓</span>' : ''}${esc(p.nome)}</button>`).join('')}</div>
-      <div id="cartao"></div>` : `<div class="card vazio" style="margin-top:20px">O organizador ainda não colocou os nomes.</div>`}
-    <div style="margin-top:40px"><a class="btn-link" href="#/g/${esc(g)}/organizador">Área do organizador →</a>
-      <span class="ajuda">Só para quem criou o grupo (pede a senha).</span></div>
-  </div></section>`;
-
-  document.getElementById('irLista').addEventListener('click', e => { e.preventDefault(); document.getElementById('lista').scrollIntoView({ behavior:'smooth' }); });
-  if (!participantes.length) return;
-  const sel = document.getElementById('selNome');
-  const mostrar = pid => {
-    sel.value = pid || '';
-    document.querySelectorAll('#chipsNomes .chip').forEach(c => c.classList.toggle('ativo', c.dataset.pid === pid));
-    const p = participantes.find(x => x.pid === pid);
-    document.getElementById('cartao').innerHTML = p ? cartaoPresentes(p, grupo) : '';
-  };
-  sel.addEventListener('change', () => mostrar(sel.value));
-  document.getElementById('chipsNomes').addEventListener('click', e => {
-    const c = e.target.closest('.chip'); if (c) mostrar(c.dataset.pid);
-  });
-  if (pidSel){ mostrar(pidSel); setTimeout(() => document.getElementById('lista').scrollIntoView(), 50); }
-}
-
-function cartaoPresentes(p, grupo){
-  const tam = (p.camiseta || p.shorts || p.sapato) ? `
-    <div class="tam">
-      <div><small>Camiseta</small><b>${esc(p.camiseta || '—')}</b></div>
-      <div><small>Shorts</small><b>${esc(p.shorts || '—')}</b></div>
-      <div><small>Sapato</small><b>${esc(p.sapato || '—')}</b></div>
-    </div>` : '';
-  const ideias = (p.ideias || []).slice().sort((a, b) => (b.favorito ? 1 : 0) - (a.favorito ? 1 : 0));
-  const lista = ideias.length ? `<h3 style="font-size:19px;margin-top:22px">Ideias de presente</h3><ul class="ideias">${ideias.map(i => `
-      <li class="${i.favorito ? 'fav' : ''}"><span class="estrela">${i.favorito ? '★' : '•'}</span>
-        <div>${i.texto ? `<div style="font-weight:600">${esc(i.texto)}${i.favorito ? ' <span class="pill o" style="font-size:12px;padding:2px 8px">favorito</span>' : ''}</div>` : (i.favorito ? '<span class="pill o" style="font-size:12px;padding:2px 8px">favorito</span>' : '')}
-        ${i.link ? `<a href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">Abrir link do produto ↗</a>` : ''}</div></li>`).join('')}</ul>` : '';
-  let corpo = '';
-  if (!p.preencheu) corpo = `<div class="vazio">${esc(p.nome)} ainda não preencheu a lista.<br>Volte mais tarde!</div>`;
-  else corpo = `
-    ${p.surpreenda ? `<div class="surpresa">${ESTRELA('#e9c27c', 30)}<div><b>Me surpreenda!</b><div style="opacity:.85">Você escolhe o presente. Os tamanhos estão abaixo.</div></div></div>` : ''}
-    ${tam}
-    ${p.cores ? `<p style="margin-top:18px"><b style="color:var(--verde)">Cores que gosto:</b> ${esc(p.cores)}</p>` : ''}
-    ${p.dicas ? `<p style="margin-top:8px"><b style="color:var(--verde)">Dicas:</b> ${esc(p.dicas)}</p>` : ''}
-    ${lista}`;
-  return `<div class="card presentes">
-    <div class="pres-top"><h3 style="font-size:28px">${esc(p.nome)}</h3>${p.atualizadoEm ? `<span class="pill c">Atualizado em ${esc(p.atualizadoEm)}</span>` : ''}</div>
-    ${corpo}
-  </div>`;
-}
-
-/* =====================================================================
-   PARTICIPANTE
-   ===================================================================== */
-async function telaParticipante(g){
-  $app.innerHTML = `<div class="carregando"><div class="spin" style="margin:0 auto"></div></div>`;
-  let d;
-  try { d = await api('verGrupo', { g }, true); } catch (e){ return telaErro(e.message); }
-  const salvo = JSON.parse(LS.get('sessao:' + g) || SS.get('sessao:' + g) || 'null');
-  if (salvo && d.participantes.some(p => p.pid === salvo.pid)){
-    try {
-      const r = await api('entrar', { g, pid: salvo.pid, pin: salvo.pin }, true);
-      return painelParticipante(g, d.grupo, r.participante, salvo.pin);
-    } catch (e){ LS.del('sessao:' + g); SS.del('sessao:' + g); }
-  }
-  escolherNome(g, d);
-}
-
-function escolherNome(g, d){
-  const { grupo, participantes } = d;
-  $app.innerHTML = `<div class="wrap"><section>
-    <p class="eyebrow">${esc(grupo.nome)}</p>
-    <h2>Quem é você?</h2>
-    <p class="sub">Toque no seu nome. Na próxima tela você cria (ou digita) seu PIN de 4 números.</p>
-    ${participantes.length ? `<div class="nomes">${participantes.map(p => `<button class="nome-btn" data-pid="${esc(p.pid)}">${esc(p.nome)} <span style="color:var(--suave);font-size:14px;font-weight:600">${p.temPin ? '🔒' : 'novo'}</span></button>`).join('')}</div>`
-      : `<div class="card vazio" style="margin-top:20px">O organizador ainda não colocou os nomes.</div>`}
-    <a class="voltar" href="#/g/${esc(g)}">← Voltar para o grupo</a>
-  </section></div>`;
-  $app.querySelectorAll('.nome-btn').forEach(b => b.addEventListener('click', () => {
-    const p = participantes.find(x => x.pid === b.dataset.pid);
-    telaPin(g, d, p);
-  }));
-}
-
-function camposPin(id){
-  return `<div class="pin" id="${id}">${[0,1,2,3].map(i => `<input type="tel" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Número ${i+1} do PIN">`).join('')}</div>`;
-}
-function ligarPin(id, aoCompletar){
-  const ins = [...document.querySelectorAll('#' + id + ' input')];
-  ins.forEach((inp, i) => {
-    inp.addEventListener('input', () => {
-      inp.value = inp.value.replace(/\D/g, '').slice(-1);
-      if (inp.value && i < 3) ins[i + 1].focus();
-      if (ins.every(x => x.value) && aoCompletar) aoCompletar();
-    });
-    inp.addEventListener('keydown', e => { if (e.key === 'Backspace' && !inp.value && i > 0) ins[i - 1].focus(); });
-    inp.addEventListener('paste', e => {
-      const t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 4);
-      if (t.length){ e.preventDefault(); t.split('').forEach((c, k) => { if (ins[k]) ins[k].value = c; }); ins[Math.min(t.length, 3)].focus(); if (t.length === 4 && aoCompletar) aoCompletar(); }
-    });
-  });
-  return { valor: () => ins.map(x => x.value).join(''), limpar: () => { ins.forEach(x => x.value = ''); ins[0].focus(); }, foco: () => ins[0].focus() };
-}
-
-function telaPin(g, d, p){
-  const novo = !p.temPin;
-  $app.innerHTML = `<div class="wrap"><section>
-    <div class="card form-card">
-      <p class="eyebrow">Olá, ${esc(p.nome)}!</p>
-      <h3 style="font-size:30px">${novo ? 'Crie seu PIN' : 'Digite seu PIN'}</h3>
-      <p>${novo ? 'Escolha 4 números fáceis de lembrar. Você vai usar esse PIN para ver quem tirou. <b>Não conte para ninguém.</b>' : 'Digite os 4 números que você criou.'}</p>
-      <label class="campo"><span>${novo ? 'Novo PIN' : 'PIN'}</span>${camposPin('pin1')}</label>
-      ${novo ? `<label class="campo"><span>Repita o PIN</span>${camposPin('pin2')}</label>` : ''}
-      <label style="display:flex;gap:10px;align-items:center;margin-top:18px;cursor:pointer"><input type="checkbox" id="lembrar" checked style="width:22px;height:22px;accent-color:var(--verde2)"> Lembrar neste aparelho</label>
-      <small class="ajuda">Desmarque se o celular ou computador não for seu.</small>
-      <button class="btn btn-verde" id="btnPin" style="margin-top:22px">${novo ? 'Criar PIN e continuar' : 'Entrar'}</button>
-      ${novo ? '' : '<p class="ajuda" style="margin-top:14px">Esqueceu o PIN? Peça para o organizador apagar o seu PIN e crie outro.</p>'}
-      <div><button class="voltar btn-link" style="border:0" id="trocar">← Não sou ${esc(p.nome)}</button></div>
-    </div></section></div>`;
-  document.getElementById('trocar').addEventListener('click', () => escolherNome(g, d));
-  const p1 = ligarPin('pin1', () => { if (novo) p2.foco(); else enviar(); });
-  const p2 = novo ? ligarPin('pin2', () => enviar()) : null;
-  p1.foco();
-  async function enviar(){
-    const pin = p1.valor();
-    if (!/^\d{4}$/.test(pin)) return toast('O PIN precisa ter 4 números.', true);
-    if (novo && pin !== p2.valor()){ toast('Os dois PINs não são iguais. Tente de novo.', true); p2.limpar(); return; }
-    try {
-      const r = await api(novo ? 'criarPin' : 'entrar', { g, pid: p.pid, pin });
-      const sess = JSON.stringify({ pid: p.pid, pin });
-      if (document.getElementById('lembrar').checked) LS.set('sessao:' + g, sess); else SS.set('sessao:' + g, sess);
-      if (novo) toast('PIN criado! Agora monte sua lista.');
-      painelParticipante(g, d.grupo, r.participante, pin);
-    } catch (e){ toast(e.message, true); p1.limpar(); if (p2) p2.limpar(); }
-  }
-  document.getElementById('btnPin').addEventListener('click', enviar);
-}
-
-function painelParticipante(g, grupo, eu, pin, abaIni){
-  document.getElementById('topAcoes').innerHTML = `<button class="btn-sair" id="sair">Sair</button>`;
-  document.getElementById('sair').addEventListener('click', () => { LS.del('sessao:' + g); SS.del('sessao:' + g); toast('Você saiu.'); location.hash = '#/g/' + g; });
-  const aba = abaIni || (grupo.sorteado ? 'tirei' : 'lista');
-  $app.innerHTML = `<div class="wrap"><section style="padding-top:40px">
-    <p class="eyebrow">${esc(grupo.nome)}</p>
-    <h2>Olá, ${esc(eu.nome)}!</h2>
-    <div class="abas" role="tablist">
-      <button class="aba ${aba === 'lista' ? 'ativo' : ''}" data-a="lista">🎁 Meus presentes</button>
-      <button class="aba ${aba === 'tirei' ? 'ativo' : ''}" data-a="tirei">✨ Quem eu tirei</button>
-    </div>
-    <div id="conteudo"></div>
-    <a class="voltar" href="#/g/${esc(g)}">← Ver lista de presentes de todos</a>
-  </section></div>`;
-  $app.querySelectorAll('.aba').forEach(b => b.addEventListener('click', () => painelParticipante(g, grupo, eu, pin, b.dataset.a)));
-  if (aba === 'lista') editorLista(g, grupo, eu, pin, novoEu => { eu = novoEu; });
-  else abaResultado(g, grupo, eu, pin);
-}
-
-const TAM_CAMISETA = ['PP','P','M','G','GG','XG','XGG','G1','G2','G3','G4'];
-const TAM_SHORTS = ['PP','P','M','G','GG','XG','XGG','34','36','38','40','42','44','46','48','50','52','54','56'];
-const TAM_SAPATO = Array.from({ length: 23 }, (_, i) => String(26 + i));
-const opts = (arr, v) => `<option value="">— Escolha —</option>` + arr.map(x => `<option ${x === v ? 'selected' : ''}>${x}</option>`).join('') + (v && !arr.includes(v) ? `<option selected>${esc(v)}</option>` : '');
-
-function editorLista(g, grupo, eu, pin, atualizou){
-  const c = document.getElementById('conteudo');
-  let ideias = (eu.ideias || []).map(i => Object.assign({}, i));
-  let alterado = false;
-  c.innerHTML = `
-    <p style="color:var(--suave);margin-top:0">Nada aqui é obrigatório. Preencha o que quiser e toque em <b>Salvar</b>. Você pode mudar depois.</p>
-    <label class="toggle ${eu.surpreenda ? 'on' : ''}" id="tgl">
-      <input type="checkbox" id="surpreenda" ${eu.surpreenda ? 'checked' : ''}>
-      <div><b>Me surpreenda, você escolhe o meu presente</b><div style="color:var(--suave);font-size:15px">Se marcar, os 3 tamanhos abaixo ficam obrigatórios.</div></div>
-    </label>
-    <div class="card" style="margin-top:18px">
-      <h3>Tamanhos</h3>
-      <p id="tamAviso">Ajuda quem vai te dar roupa ou calçado.</p>
-      <div class="linha">
-        <label class="campo"><span>Camiseta</span><select id="camiseta">${opts(TAM_CAMISETA, eu.camiseta)}</select></label>
-        <label class="campo"><span>Shorts</span><select id="shorts">${opts(TAM_SHORTS, eu.shorts)}</select></label>
-        <label class="campo"><span>Sapato</span><select id="sapato">${opts(TAM_SAPATO, eu.sapato)}</select></label>
-      </div>
-      <label class="campo"><span>Cores que você gosta</span><input type="text" id="cores" maxlength="150" value="${esc(eu.cores)}" placeholder="Ex.: preto, verde, nada rosa"></label>
-      <label class="campo"><span>Dicas e preferências</span><textarea id="dicas" maxlength="500" placeholder="Ex.: gosto de livros de suspense, não bebo café…">${esc(eu.dicas)}</textarea></label>
-    </div>
-    <div class="card" style="margin-top:18px">
-      <h3>Ideias de presente <span style="color:var(--suave);font-weight:400;font-size:16px">(até 5)</span></h3>
-      <p>Escreva a ideia e/ou cole o link do produto. Marque ★ no seu favorito.</p>
-      <div id="ideias"></div>
-      <button class="btn btn-borda btn-peq" id="addIdeia" style="margin-top:14px">+ Adicionar ideia</button>
-    </div>
-    <div class="barra-salvar"><button class="btn btn-verde" id="salvar">Salvar minha lista</button><span class="status" id="status">${eu.atualizadoEm ? 'Salvo em ' + esc(eu.atualizadoEm) : 'Ainda não salvo'}</span></div>`;
-
-  const tgl = document.getElementById('tgl'), chk = document.getElementById('surpreenda');
-  const marcarAlterado = () => { alterado = true; document.getElementById('status').textContent = 'Alterações não salvas'; };
-  const atualizarTgl = () => {
-    tgl.classList.toggle('on', chk.checked);
-    const a = document.getElementById('tamAviso');
-    a.innerHTML = chk.checked ? '<b style="color:var(--vermelho)">Obrigatório: escolha os 3 tamanhos.</b>' : 'Ajuda quem vai te dar roupa ou calçado.';
-  };
-  chk.addEventListener('change', () => { atualizarTgl(); marcarAlterado(); });
-  atualizarTgl();
-  ['camiseta','shorts','sapato','cores','dicas'].forEach(id => document.getElementById(id).addEventListener('input', marcarAlterado));
-
-  const box = document.getElementById('ideias');
-  function desenharIdeias(){
-    box.innerHTML = ideias.length ? ideias.map((i, k) => `
-      <div class="ideia-ed" data-k="${k}">
-        <div class="cab"><label class="fav-lbl"><input type="radio" name="fav" ${i.favorito ? 'checked' : ''}> ★ Favorito</label>
-          <button class="x" data-rm="${k}">Remover</button></div>
-        <input type="text" class="txt" maxlength="150" placeholder="Ideia (ex.: fone de ouvido bluetooth)" value="${esc(i.texto)}">
-        <input type="url" class="lnk" maxlength="500" placeholder="Link do produto (opcional)" value="${esc(i.link)}">
-      </div>`).join('') : '<p class="ajuda">Nenhuma ideia ainda.</p>';
-    document.getElementById('addIdeia').disabled = ideias.length >= 5;
-    document.getElementById('addIdeia').textContent = ideias.length >= 5 ? 'Limite de 5 ideias' : '+ Adicionar ideia';
-  }
-  box.addEventListener('input', e => {
-    const el = e.target.closest('.ideia-ed'); if (!el) return;
-    const k = +el.dataset.k;
-    if (e.target.classList.contains('txt')) ideias[k].texto = e.target.value;
-    if (e.target.classList.contains('lnk')) ideias[k].link = e.target.value;
-    marcarAlterado();
-  });
-  box.addEventListener('change', e => {
-    if (e.target.type === 'radio'){ const k = +e.target.closest('.ideia-ed').dataset.k; ideias.forEach((i, j) => i.favorito = j === k); marcarAlterado(); }
-  });
-  box.addEventListener('click', e => {
-    const rm = e.target.closest('[data-rm]'); if (!rm) return;
-    ideias.splice(+rm.dataset.rm, 1); desenharIdeias(); marcarAlterado();
-  });
-  document.getElementById('addIdeia').addEventListener('click', () => {
-    if (ideias.length >= 5) return;
-    ideias.push({ texto:'', link:'', favorito: !ideias.some(i => i.favorito) });
-    desenharIdeias(); marcarAlterado();
-    const ult = box.querySelector('.ideia-ed:last-child .txt'); if (ult) ult.focus();
-  });
-  desenharIdeias();
-
-  document.getElementById('salvar').addEventListener('click', async () => {
-    const dados = {
-      surpreenda: chk.checked,
-      camiseta: document.getElementById('camiseta').value, shorts: document.getElementById('shorts').value, sapato: document.getElementById('sapato').value,
-      cores: document.getElementById('cores').value, dicas: document.getElementById('dicas').value,
-      ideias: ideias.filter(i => (i.texto || '').trim() || (i.link || '').trim())
-    };
-    if (dados.surpreenda && (!dados.camiseta || !dados.shorts || !dados.sapato)){
-      toast('Para usar "Me surpreenda" escolha os 3 tamanhos: camiseta, shorts e sapato.', true);
-      const falta = ['camiseta','shorts','sapato'].find(k => !dados[k]); document.getElementById(falta).focus();
-      return;
-    }
-    try {
-      const r = await api('salvarLista', { g, pid: eu.pid, pin, dados });
-      eu = r.participante; atualizou(eu); alterado = false;
-      ideias = (eu.ideias || []).map(i => Object.assign({}, i)); desenharIdeias();
-      document.getElementById('status').textContent = '✓ Salvo em ' + eu.atualizadoEm;
-      toast('Lista salva!');
-    } catch (e){ toast(e.message, true); }
-  });
-  window.onbeforeunload = () => alterado ? true : undefined;
-}
-
-async function abaResultado(g, grupo, eu, pin){
-  window.onbeforeunload = null;
-  const c = document.getElementById('conteudo');
-  if (!grupo.sorteado){
-    c.innerHTML = `<div class="card vazio"><div style="font-size:46px">⏳</div><h3>O sorteio ainda não foi feito</h3><p>Quando o organizador sortear, volte aqui para ver quem você tirou. Enquanto isso, monte sua lista em "Meus presentes".</p></div>`;
-    try { const d = await api('verGrupo', { g }, true); if (d.grupo.sorteado){ grupo.sorteado = true; painelParticipante(g, d.grupo, eu, pin, 'tirei'); } } catch (e){}
-    return;
-  }
-  c.innerHTML = `<div class="carregando" style="padding:40px"><div class="spin" style="margin:0 auto"></div></div>`;
-  let r;
-  try { r = await api('meuResultado', { g, pid: eu.pid, pin }, true); }
-  catch (e){ c.innerHTML = `<div class="aviso r">${esc(e.message)}</div>`; return; }
-  const alvo = r.tirou;
-  c.innerHTML = `
-    <div class="resultado oculto" id="res">
-      <small>Você tirou</small>
-      <div class="quem">${esc(alvo.nome)}</div>
-      <p id="dicaRev">Confira se ninguém está olhando a sua tela 👀</p>
-      <button class="btn" id="revelar" style="background:#e9c27c;color:#173d31;margin-top:20px">Mostrar quem eu tirei</button>
-    </div>
-    <div class="aviso o" style="margin-top:18px;font-size:16.5px"><b>⬇ Baixe a imagem!</b> Guarde no celular para não esquecer quem você tirou. Não mande para ninguém do grupo.</div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
-      <button class="btn btn-verde" id="baixar">⬇ Baixar imagem de quem eu tirei</button>
-      <a class="btn btn-borda" href="#/g/${esc(g)}/lista/${esc(alvo.pid)}">Ver lista de ${esc(alvo.nome)} →</a>
-    </div>
-    <div id="listaAlvo" style="display:none">${cartaoPresentes(alvo, grupo)}</div>`;
-  document.getElementById('revelar').addEventListener('click', e => {
-    document.getElementById('res').classList.remove('oculto');
-    e.target.remove(); document.getElementById('dicaRev').textContent = 'Shhh… é segredo! 🤫';
-    document.getElementById('listaAlvo').style.display = '';
-  });
-  document.getElementById('baixar').addEventListener('click', () => baixarImagem(eu.nome, alvo, grupo));
-}
-
-/* ---------- imagem para baixar ---------- */
-function baixarImagem(meuNome, alvo, grupo){
-  const W = 1080, H = 1350;
-  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
-  const x = cv.getContext('2d');
-  const fonte = '"Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif';
-  // fundo
-  const grad = x.createLinearGradient(0, 0, W, H); grad.addColorStop(0, '#1f5c45'); grad.addColorStop(1, '#122f26');
-  x.fillStyle = grad; x.fillRect(0, 0, W, H);
-  // estrelinhas
-  const estrela = (cx, cy, r, cor, a) => { x.save(); x.globalAlpha = a; x.fillStyle = cor; x.beginPath();
-    x.moveTo(cx, cy - r); x.quadraticCurveTo(cx + r * .12, cy - r * .12, cx + r * .9, cy); x.quadraticCurveTo(cx + r * .12, cy + r * .12, cx, cy + r);
-    x.quadraticCurveTo(cx - r * .12, cy + r * .12, cx - r * .9, cy); x.quadraticCurveTo(cx - r * .12, cy - r * .12, cx, cy - r); x.fill(); x.restore(); };
-  let s = 7; const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
-  for (let i = 0; i < 38; i++) estrela(rnd() * W, rnd() * H, 6 + rnd() * 16, '#e9c27c', .15 + rnd() * .35);
-  // cartão
-  const rr = (X, Y, w, h, r) => { x.beginPath(); x.moveTo(X + r, Y); x.arcTo(X + w, Y, X + w, Y + h, r); x.arcTo(X + w, Y + h, X, Y + h, r); x.arcTo(X, Y + h, X, Y, r); x.arcTo(X, Y, X + w, Y, r); x.closePath(); };
-  x.fillStyle = '#fffdf8'; rr(90, 250, W - 180, 760, 46); x.fill();
-  // laço
-  x.fillStyle = '#b9483f'; x.fillRect(W / 2 - 28, 250, 56, 760);
-  x.fillStyle = '#fffdf8'; rr(150, 460, W - 300, 520, 30); x.fill();
-  // topo
-  x.textAlign = 'center'; x.fillStyle = '#e9c27c';
-  x.font = `800 34px ${fonte}`; x.fillText('AMIGO SECRETO', W / 2, 120);
-  x.fillStyle = '#ffffff'; x.font = `700 44px ${fonte}`;
-  x.fillText(cortar(x, grupo.nome, W - 160), W / 2, 185);
-  // texto
-  x.fillStyle = '#6b746f'; x.font = `600 38px ${fonte}`;
-  x.fillText(cortar(x, meuNome + ', você tirou:', W - 380), W / 2, 545);
-  x.fillStyle = '#173d31';
-  let tam = 130; x.font = `800 ${tam}px ${fonte}`;
-  while (x.measureText(alvo.nome).width > W - 400 && tam > 50){ tam -= 4; x.font = `800 ${tam}px ${fonte}`; }
-  x.fillText(cortar(x, alvo.nome, W - 380), W / 2, 680);
-  estrela(W / 2, 745, 26, '#b9483f', 1);
-  // tamanhos
-  const tams = [['Camiseta', alvo.camiseta], ['Shorts', alvo.shorts], ['Sapato', alvo.sapato]];
-  if (tams.some(t => t[1])){
-    tams.forEach((t, i) => {
-      const cx = 250 + i * 290;
-      x.fillStyle = '#f6f2ea'; rr(cx - 120, 850, 240, 120, 24); x.fill();
-      x.fillStyle = '#6b746f'; x.font = `700 24px ${fonte}`; x.fillText(t[0].toUpperCase(), cx, 893);
-      x.fillStyle = '#173d31'; x.font = `800 42px ${fonte}`; x.fillText(t[1] || '—', cx, 945);
-    });
-  } else {
-    x.fillStyle = '#6b746f'; x.font = `600 30px ${fonte}`; x.fillText(alvo.surpreenda ? 'Me surpreenda! 🎁' : 'Veja a lista de presentes no site', W / 2, 920);
-  }
-  // rodapé
-  x.fillStyle = '#ffffff'; x.font = `600 34px ${fonte}`;
-  const info = [grupo.data ? 'Revelação: ' + dataBR(grupo.data) : '', grupo.valor || ''].filter(Boolean).join('   ·   ');
-  if (info) x.fillText(info, W / 2, 1095);
-  x.fillStyle = '#e9c27c'; x.font = `700 30px ${fonte}`; x.fillText('Shhh… é segredo! 🤫', W / 2, 1170);
-  x.fillStyle = 'rgba(255,255,255,.6)'; x.font = `600 24px ${fonte}`; x.fillText('Amigo secreto - Digital', W / 2, 1280);
-
-  cv.toBlob(blob => {
-    const nomeArq = 'amigo-secreto-' + meuNome.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.png';
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = nomeArq; document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
-    toast('Imagem baixada! Confira na galeria ou em Downloads.');
-  }, 'image/png');
-}
-function cortar(x, t, max){
-  t = String(t || ''); if (x.measureText(t).width <= max) return t;
-  while (t.length > 1 && x.measureText(t + '…').width > max) t = t.slice(0, -1);
-  return t + '…';
-}
-
-/* =====================================================================
-   ORGANIZADOR
-   ===================================================================== */
-async function telaOrganizador(g){
-  const senha = SS.get('adm:' + g);
-  if (senha){
-    try { const d = await api('admEntrar', { g, senha }); return painelAdm(g, senha, d, 'nomes'); }
-    catch (e){ SS.del('adm:' + g); }
-  }
-  $app.innerHTML = `<div class="wrap"><section>
-    <div class="card form-card">
-      <p class="eyebrow">Área do organizador</p>
-      <h3 style="font-size:30px">Digite a senha do organizador</h3>
-      <p>É a senha criada quando o grupo foi feito.</p>
-      <form id="fAdm"><label class="campo"><span>Senha</span><input type="password" name="senha" required autofocus></label>
-      <button class="btn btn-verde" style="margin-top:20px">Entrar</button></form>
-      <a class="voltar" href="#/g/${esc(g)}">← Voltar para o grupo</a>
-    </div></section></div>`;
-  document.getElementById('fAdm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const s = new FormData(e.target).get('senha');
-    try { const d = await api('admEntrar', { g, senha: s }); SS.set('adm:' + g, s); painelAdm(g, s, d, 'nomes'); }
-    catch (err){ toast(err.message, true); }
-  });
-}
-
 function painelAdm(g, senha, d, aba){
   window.onbeforeunload = null;
-  document.getElementById('topAcoes').innerHTML = `<a class="btn btn-borda btn-peq" href="#/g/${esc(g)}">Ver grupo</a><button class="btn-sair" id="sairAdm">Sair</button>`;
-  document.getElementById('sairAdm').addEventListener('click', () => { SS.del('adm:' + g); location.hash = '#/g/' + g; });
+  document.getElementById('topAcoes').innerHTML = `<a class="btn btn-borda btn-peq" href="#/">Meus grupos</a>`;
   const { grupo, participantes } = d;
-  const link = location.href.split('#')[0] + '#/g/' + g;
-  const abas = [['nomes','1. Nomes'],['rest','2. Restrições'],['sorteio','3. Sorteio'],['config','Configurações']];
-  $app.innerHTML = `<div class="wrap"><section style="padding-top:40px">
-    <p class="eyebrow">Área do organizador</p>
+  const link = location.href.split('#')[0] + '#/s/' + g;
+  const abas = [['nomes','1. Nomes'],['rest','2. Restrições'],['liberar','3. Liberar e enviar'],['ajustes','Ajustes']];
+  $app.innerHTML = `<div class="wrap"><section style="padding-top:30px">
+    <p class="eyebrow">Organizador</p>
     <h2>${esc(grupo.nome)}</h2>
-    <div class="meta" style="margin-top:12px"><span class="pill">${participantes.length} participantes</span>
-      ${grupo.sorteado ? `<span class="pill r">✓ Sorteio feito em ${esc(grupo.sorteadoEm)}</span>` : '<span class="pill o">Aguardando sorteio</span>'}</div>
-    <div class="card" style="margin-top:22px;padding:22px">
-      <b style="color:var(--verde)">Link para mandar ao grupo</b>
+    <div class="meta"><span class="pill">${participantes.length} pessoas</span>
+      ${grupo.sorteado ? `<span class="pill r">✓ Sorteio liberado</span>` : '<span class="pill o">Montando</span>'}</div>
+    <div class="card" style="margin-top:20px;padding:20px">
+      <b style="color:var(--verde)">Link dos participantes</b> <span class="sub" style="font-size:15px">(eles só veem o sorteio e os presentes)</span>
       <div class="link-box"><input type="text" readonly value="${esc(link)}" id="linkG">
         <button class="btn btn-verde btn-peq" id="copiar">Copiar link</button>
-        <a class="btn btn-borda btn-peq" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('🎁 Amigo secreto: ' + grupo.nome + '\nEntre no link, escolha seu nome e monte sua lista de presentes:\n' + link)}">Mandar no WhatsApp</a></div>
+        <a class="btn btn-borda btn-peq" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('🎁 Amigo secreto: ' + grupo.nome + '\nToque no link, clique em "Quem sou eu?", sorteie e conte o que você quer ganhar:\n' + link)}">WhatsApp</a></div>
     </div>
     <div class="abas">${abas.map(a => `<button class="aba ${a[0] === aba ? 'ativo' : ''}" data-a="${a[0]}">${a[1]}</button>`).join('')}</div>
     <div id="admC"></div>
@@ -880,231 +734,157 @@ function painelAdm(g, senha, d, aba){
   });
   $app.querySelectorAll('.aba').forEach(b => b.addEventListener('click', () => painelAdm(g, senha, d, b.dataset.a)));
   const ctx = { g, senha, d, recarregar: (nd, a) => painelAdm(g, senha, nd, a || aba) };
-  ({ nomes: admNomes, rest: admRestricoes, sorteio: admSorteio, config: admConfig })[aba](ctx);
+  ({ nomes: admNomes, rest: admRestricoes, liberar: admLiberar, ajustes: admAjustes })[aba](ctx);
 }
 
+const norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+
 function admNomes({ g, senha, d, recarregar }){
-  const c = document.getElementById('admC');
-  const trav = d.grupo.sorteado;
+  const c = document.getElementById('admC'), trav = d.grupo.sorteado;
   let lista = d.participantes.map(p => ({ pid: p.pid, nome: p.nome }));
-  c.innerHTML = `
-    ${trav ? '<div class="aviso o">O sorteio já foi feito, então os nomes estão travados. Para mudar, vá em "3. Sorteio" e desfaça o sorteio.</div>' : ''}
+  c.innerHTML = `${trav ? '<div class="aviso o">O sorteio já foi liberado, então os nomes estão travados. Para mudar, desfaça em "3. Liberar e enviar".</div>' : ''}
     <div class="card" ${trav ? 'style="opacity:.6;pointer-events:none"' : ''}>
-      <h3>Adicionar nomes</h3>
-      <p>Escreva um nome por linha (pode colar uma lista inteira). Nomes iguais não são aceitos.</p>
-      <textarea id="novos" placeholder="Ana&#10;Bruno&#10;Carla"></textarea>
-      <button class="btn btn-borda btn-peq" id="addNomes" style="margin-top:12px">+ Colocar na lista</button>
-      <h3 style="margin-top:28px">Participantes (<span id="qtd">0</span>)</h3>
-      <p>Toque no nome para corrigir. Use o X para tirar alguém.</p>
+      <h3>Coloque os nomes</h3>
+      <p class="sub">Um nome por linha (pode colar a lista toda). Nomes iguais não são aceitos.</p>
+      <textarea id="novos" placeholder="Ana&#10;Bruno&#10;Vó Maria" style="margin-top:12px"></textarea>
+      <button class="btn btn-borda btn-peq" id="addNomes" style="margin-top:10px">+ Colocar na lista</button>
+      <h3 style="margin-top:26px">Participantes (<span id="qtd"></span>)</h3>
       <div class="adm-lista" id="admLista"></div>
     </div>
-    <div class="barra-salvar" ${trav ? 'style="display:none"' : ''}><button class="btn btn-verde" id="salvarNomes">Salvar nomes</button><span class="status" id="stN">Tudo salvo</span></div>`;
+    <div class="salvar-barra" ${trav ? 'style="display:none"' : ''}><button class="btn btn-verde btn-full" id="salvarNomes">Salvar nomes</button></div>`;
   const desenhar = () => {
     document.getElementById('qtd').textContent = lista.length;
-    document.getElementById('admLista').innerHTML = lista.length ? lista.map((p, i) => `
-      <div class="adm-item"><span class="n">${i + 1}</span><input type="text" maxlength="40" value="${esc(p.nome)}" data-i="${i}">
-      <button class="x" data-rm="${i}" aria-label="Remover">✕</button></div>`).join('') : '<p class="ajuda">Nenhum nome ainda.</p>';
+    document.getElementById('admLista').innerHTML = lista.map((p, i) => `<div class="adm-item"><span class="n">${i + 1}</span>
+      <input type="text" maxlength="40" value="${esc(p.nome)}" data-i="${i}"><button class="x" data-rm="${i}">✕</button></div>`).join('') || '<p class="sub">Nenhum nome ainda.</p>';
   };
-  const sujo = () => { document.getElementById('stN').textContent = 'Alterações não salvas'; window.onbeforeunload = () => true; };
+  const sujo = () => { window.onbeforeunload = () => true; };
   desenhar();
-  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
   document.getElementById('addNomes').addEventListener('click', () => {
-    const ta = document.getElementById('novos');
-    const nomes = ta.value.split(/\n|;/).map(s => s.trim()).filter(Boolean);
-    const rep = [];
-    nomes.forEach(n => {
+    const ta = document.getElementById('novos'), rep = [];
+    ta.value.split(/\n|;/).map(s => s.trim()).filter(Boolean).forEach(n => {
       if (lista.some(p => norm(p.nome) === norm(n))) rep.push(n); else lista.push({ nome: n.slice(0, 40) });
     });
     ta.value = rep.join('\n');
-    if (rep.length) toast('Estes nomes já estão na lista: ' + rep.join(', ') + '. Diferencie (ex.: "Ana S.").', true);
+    if (rep.length) toast('Já estão na lista: ' + rep.join(', ') + '. Diferencie (ex.: "Ana S.").', true);
     desenhar(); sujo();
   });
   document.getElementById('admLista').addEventListener('input', e => { if (e.target.dataset.i){ lista[+e.target.dataset.i].nome = e.target.value; sujo(); } });
   document.getElementById('admLista').addEventListener('click', async e => {
     const rm = e.target.closest('[data-rm]'); if (!rm) return;
     const p = lista[+rm.dataset.rm];
-    if (p.pid && !(await confirmar('Tirar ' + p.nome + '?', 'A lista de presentes e as restrições dessa pessoa serão apagadas quando você salvar.', 'Tirar', true))) return;
+    if (p.pid && !(await confirmar('Tirar ' + p.nome + '?', 'Os pedidos e restrições dessa pessoa serão apagados ao salvar.', 'Tirar', true))) return;
     lista.splice(+rm.dataset.rm, 1); desenhar(); sujo();
   });
   document.getElementById('salvarNomes').addEventListener('click', async () => {
     const vistos = {};
-    for (const p of lista){
-      const k = norm(p.nome || '');
-      if (!k) return toast('Há um nome vazio na lista.', true);
-      if (vistos[k]) return toast('O nome "' + p.nome + '" está repetido.', true);
-      vistos[k] = 1;
-    }
-    try {
-      const nd = await api('admSalvarParticipantes', { g, senha, participantes: lista });
-      window.onbeforeunload = null; toast('Nomes salvos!'); recarregar(nd, 'nomes');
-    } catch (e){ toast(e.message, true); }
+    for (const p of lista){ const k = norm(p.nome || ''); if (!k) return toast('Há um nome vazio.', true); if (vistos[k]) return toast('O nome "' + p.nome + '" está repetido.', true); vistos[k] = 1; }
+    try { const nd = await api('admSalvarParticipantes', { g, senha, participantes: lista }); toast('Nomes salvos!'); recarregar(nd, 'nomes'); }
+    catch (e){ toast(e.message, true); }
   });
 }
 
 function admRestricoes({ g, senha, d, recarregar }){
-  const c = document.getElementById('admC');
-  const ps = d.participantes, trav = d.grupo.sorteado;
+  const c = document.getElementById('admC'), ps = d.participantes, trav = d.grupo.sorteado;
   const proib = {}; d.restricoes.forEach(r => proib[r[0] + '|' + r[1]] = true);
-  if (ps.length < 2){ c.innerHTML = '<div class="card vazio">Coloque pelo menos 2 nomes na aba "1. Nomes" primeiro.</div>'; return; }
-  c.innerHTML = `
-    ${trav ? '<div class="aviso o">O sorteio já foi feito, então as restrições estão travadas.</div>' : ''}
+  if (ps.length < 2){ c.innerHTML = '<div class="card">Coloque os nomes na aba "1. Nomes" primeiro.</div>'; return; }
+  c.innerHTML = `${trav ? '<div class="aviso o">O sorteio já foi liberado, então as restrições estão travadas.</div>' : ''}
     <div class="card" ${trav ? 'style="opacity:.6;pointer-events:none"' : ''}>
       <h3>Quem NÃO pode tirar quem</h3>
-      <p>Toque nos nomes que a pessoa <b>não pode tirar</b>. Eles ficam vermelhos. Se ninguém tiver restrição, não precisa mexer aqui.</p>
-      <label class="toggle on" style="margin-top:16px;padding:14px 16px"><input type="checkbox" id="dois" checked>
-        <div><b style="font-size:16px">Aplicar nos dois sentidos</b><div style="color:var(--suave);font-size:14.5px">Ex.: casal — Ana não tira Bruno e Bruno não tira Ana.</div></div></label>
-      <div id="viab"></div>
-      <div id="restLista"></div>
+      <p class="sub">Toque nos nomes que a pessoa não pode tirar (ficam vermelhos). Se não tiver restrição, pule esta parte.</p>
+      <label class="check"><input type="checkbox" id="dois" checked> Aplicar nos dois sentidos (casais: um não tira o outro)</label>
+      <div id="viab"></div><div id="restLista"></div>
     </div>
-    <div class="barra-salvar" ${trav ? 'style="display:none"' : ''}><button class="btn btn-verde" id="salvarRest">Salvar restrições</button><span class="status" id="stR">Tudo salvo</span></div>`;
+    <div class="salvar-barra" ${trav ? 'style="display:none"' : ''}><button class="btn btn-verde btn-full" id="salvarRest">Salvar restrições</button></div>`;
   const desenhar = () => {
-    document.getElementById('restLista').innerHTML = ps.map(a => {
-      const n = ps.filter(b => proib[a.pid + '|' + b.pid]).length;
-      return `<div class="rest-card"><b style="color:var(--verde)">${esc(a.nome)}</b> <span class="ajuda" style="display:inline">não pode tirar${n ? ' (' + n + ')' : ':'}</span>
-        <div class="chips">${ps.filter(b => b.pid !== a.pid).map(b => `<button class="chip ${proib[a.pid + '|' + b.pid] ? 'bloq' : ''}" data-a="${a.pid}" data-b="${b.pid}">${proib[a.pid + '|' + b.pid] ? '✕ ' : ''}${esc(b.nome)}</button>`).join('')}</div></div>`;
-    }).join('');
-    const ok = existeSorteio(ps.map(p => p.pid), proib);
-    document.getElementById('viab').innerHTML = ok
-      ? '<div class="aviso v">✓ Com essas restrições o sorteio é possível.</div>'
-      : '<div class="aviso r"><b>⚠ Sorteio impossível.</b> Com essas restrições não dá para todo mundo tirar alguém. Remova alguma restrição.</div>';
+    document.getElementById('restLista').innerHTML = ps.map(a => `<div class="rest-card"><b style="color:var(--verde)">${esc(a.nome)}</b> <span class="sub" style="font-size:15px">não pode tirar:</span>
+      <div class="chips">${ps.filter(b => b.pid !== a.pid).map(b => `<button class="chip ${proib[a.pid + '|' + b.pid] ? 'bloq' : ''}" data-a="${a.pid}" data-b="${b.pid}">${proib[a.pid + '|' + b.pid] ? '✕ ' : ''}${esc(b.nome)}</button>`).join('')}</div></div>`).join('');
+    document.getElementById('viab').innerHTML = existeSorteio(ps.map(p => p.pid), proib)
+      ? '<div class="aviso v">✓ Com essas restrições o sorteio funciona.</div>'
+      : '<div class="aviso r"><b>⚠ Sorteio impossível.</b> Com essas restrições não dá para todo mundo tirar alguém. Tire alguma restrição.</div>';
   };
   desenhar();
   document.getElementById('restLista').addEventListener('click', e => {
     const ch = e.target.closest('.chip'); if (!ch) return;
-    const k = ch.dataset.a + '|' + ch.dataset.b, ativar = !proib[k];
+    const k = ch.dataset.a + '|' + ch.dataset.b, on = !proib[k];
     const set = (kk, v) => { if (v) proib[kk] = true; else delete proib[kk]; };
-    set(k, ativar);
-    if (document.getElementById('dois').checked) set(ch.dataset.b + '|' + ch.dataset.a, ativar);
-    document.getElementById('stR').textContent = 'Alterações não salvas'; window.onbeforeunload = () => true;
-    desenhar();
+    set(k, on); if (document.getElementById('dois').checked) set(ch.dataset.b + '|' + ch.dataset.a, on);
+    window.onbeforeunload = () => true; desenhar();
   });
-  document.getElementById('dois').addEventListener('change', e => e.target.closest('.toggle').classList.toggle('on', e.target.checked));
   document.getElementById('salvarRest').addEventListener('click', async () => {
     if (!existeSorteio(ps.map(p => p.pid), proib) && !(await confirmar('Sorteio impossível', 'Com essas restrições o sorteio não vai funcionar. Salvar mesmo assim?', 'Salvar assim mesmo', true))) return;
-    try {
-      const nd = await api('admSalvarRestricoes', { g, senha, restricoes: Object.keys(proib).map(k => k.split('|')) });
-      window.onbeforeunload = null; toast('Restrições salvas!'); recarregar(nd, 'rest');
-    } catch (e){ toast(e.message, true); }
+    try { const nd = await api('admSalvarRestricoes', { g, senha, restricoes: Object.keys(proib).map(k => k.split('|')) }); toast('Restrições salvas!'); recarregar(nd, 'rest'); }
+    catch (e){ toast(e.message, true); }
   });
 }
 
-function admSorteio({ g, senha, d, recarregar }){
-  const c = document.getElementById('admC');
-  const ps = d.participantes, grupo = d.grupo;
-  const faltam = ps.filter(p => !p.preencheu);
+function admLiberar({ g, senha, d, recarregar }){
+  const c = document.getElementById('admC'), ps = d.participantes, gr = d.grupo;
   const proib = {}; d.restricoes.forEach(r => proib[r[0] + '|' + r[1]] = true);
   const possivel = ps.length >= 3 && existeSorteio(ps.map(p => p.pid), proib);
-  c.innerHTML = `
-    <div class="card">
-      ${grupo.sorteado ? `
-        <h3>✓ Sorteio feito</h3>
-        <p>Feito em ${esc(grupo.sorteadoEm)}. Cada pessoa entra com o próprio PIN e vê só quem tirou. <b>Nem o organizador vê os resultados</b>, então você também pode participar.</p>
-        <button class="btn btn-borda" id="desfazer" style="margin-top:18px;color:var(--vermelho);border-color:var(--vermelho)">Desfazer sorteio</button>
-        <small class="ajuda">Use só se precisar mudar nomes ou restrições. Todos vão precisar ver o resultado de novo.</small>`
-      : `
-        <h3>Fazer o sorteio</h3>
-        <p>Ninguém tira a si mesmo, ninguém é tirado duas vezes e as restrições são respeitadas.</p>
-        ${faltam.length ? `<div class="aviso o"><b>${faltam.length} ${faltam.length === 1 ? 'pessoa ainda não preencheu' : 'pessoas ainda não preencheram'}</b> a lista. Você pode sortear assim mesmo; elas podem preencher depois.</div>` : (ps.length ? '<div class="aviso v">✓ Todo mundo já preencheu a lista.</div>' : '')}
-        ${ps.length < 3 ? '<div class="aviso r">São necessários pelo menos 3 participantes.</div>' : (!possivel ? '<div class="aviso r">As restrições deixam o sorteio impossível. Ajuste na aba "2. Restrições".</div>' : '')}
-        <button class="btn btn-verde" id="sortear" style="margin-top:20px" ${possivel ? '' : 'disabled'}>✨ Sortear agora</button>`}
-    </div>
-    <div class="card" style="margin-top:18px">
-      <h3>Situação de cada pessoa</h3>
-      <p>"Apagar PIN" serve para quem esqueceu: a pessoa cria um novo no próximo acesso.</p>
-      <div class="status-lista">${ps.map(p => `
-        <div class="status-item"><b style="color:var(--verde)">${esc(p.nome)}</b>
-          <span style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-            ${p.preencheu ? '<span class="pill">✓ Lista preenchida</span>' : '<span class="pill o">Falta preencher</span>'}
-            ${p.temPin ? `<span class="pill c">🔒 Tem PIN</span><button class="x" data-pin="${esc(p.pid)}">Apagar PIN</button>` : '<span class="pill c">Sem PIN</span>'}
-          </span></div>`).join('') || '<p class="ajuda">Nenhum participante.</p>'}</div>
-    </div>`;
-  const bs = document.getElementById('sortear');
-  if (bs) bs.addEventListener('click', async () => {
-    if (!(await confirmar('Sortear agora?', `${ps.length} participantes. Depois do sorteio, nomes e restrições ficam travados.`, 'Sortear'))) return;
-    try { const nd = await api('admSortear', { g, senha }); toast('Sorteio feito! Avise o grupo.'); recarregar(nd, 'sorteio'); }
-    catch (e){ toast(e.message, true); }
+  const jaSort = ps.filter(p => p.jaSorteou).length, jaEsc = ps.filter(p => p.preencheu).length;
+  c.innerHTML = `<div class="card">
+    ${gr.sorteado ? `<h3>✓ Sorteio liberado</h3>
+      <p class="sub">O sistema já definiu em segredo quem tira quem. Cada pessoa abre o link, toca em "Quem sou eu?" e sorteia. Nem você vê os resultados, então pode participar também.</p>
+      <button class="btn btn-borda btn-peq" id="desfazer" style="margin-top:16px;color:var(--vermelho);border-color:var(--vermelho)">Desfazer liberação</button>`
+    : `<h3>Liberar o sorteio</h3>
+      <p class="sub">Ao liberar, o sistema define em segredo quem tira quem, sem repetir ninguém e respeitando suas restrições. Depois disso cada pessoa sorteia o seu pelo link.</p>
+      <p class="sub">Antes de liberar, as pessoas já podem entrar pelo link e contar o que querem ganhar.</p>
+      ${ps.length < 3 ? '<div class="aviso r">Coloque pelo menos 3 nomes.</div>' : (!possivel ? '<div class="aviso r">As restrições deixam o sorteio impossível. Ajuste em "2. Restrições".</div>' : '')}
+      <button class="btn btn-verde btn-full" id="liberar" style="margin-top:18px" ${possivel ? '' : 'disabled'}>✨ Liberar sorteio</button>`}
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>Como está cada pessoa</h3>
+    <p class="sub">${gr.sorteado ? jaSort + ' de ' + ps.length + ' já sortearam · ' : ''}${jaEsc} de ${ps.length} já contaram o que querem. "Apagar senha" é para quem esqueceu.</p>
+    ${ps.map(p => `<div class="status-item"><b style="color:var(--verde)">${esc(p.nome)}</b>
+      <span style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        ${gr.sorteado ? (p.jaSorteou ? '<span class="pill">🎲 Já sorteou</span>' : '<span class="pill o">Não sorteou</span>') : ''}
+        ${p.preencheu ? '<span class="pill">🎁 Já escreveu</span>' : '<span class="pill c">Não escreveu</span>'}
+        ${p.temPin ? `<button class="x" data-pin="${esc(p.pid)}">Apagar senha</button>` : '<span class="pill c">Sem senha</span>'}
+      </span></div>`).join('')}
+  </div>`;
+  const bl = document.getElementById('liberar');
+  if (bl) bl.addEventListener('click', async () => {
+    if (!(await confirmar('Liberar o sorteio?', ps.length + ' pessoas. Depois disso nomes e restrições ficam travados.', 'Liberar'))) return;
+    try { const nd = await api('admSortear', { g, senha }); toast('Sorteio liberado! Mande o link.'); recarregar(nd, 'liberar'); } catch (e){ toast(e.message, true); }
   });
   const bd = document.getElementById('desfazer');
   if (bd) bd.addEventListener('click', async () => {
-    if (!(await confirmar('Desfazer o sorteio?', 'Os resultados atuais serão apagados. Quem já viu quem tirou vai ter um resultado diferente no novo sorteio. As listas de presentes continuam salvas.', 'Desfazer sorteio', true))) return;
-    try { const nd = await api('admDesfazerSorteio', { g, senha }); toast('Sorteio desfeito.'); recarregar(nd, 'sorteio'); }
-    catch (e){ toast(e.message, true); }
+    if (!(await confirmar('Desfazer a liberação?', 'Os pares atuais serão apagados. Quem já sorteou vai sortear de novo e pode cair em outra pessoa. Os pedidos de presente continuam salvos.', 'Desfazer', true))) return;
+    try { const nd = await api('admDesfazerSorteio', { g, senha }); toast('Liberação desfeita.'); recarregar(nd, 'liberar'); } catch (e){ toast(e.message, true); }
   });
   c.querySelectorAll('[data-pin]').forEach(b => b.addEventListener('click', async () => {
     const p = ps.find(x => x.pid === b.dataset.pin);
-    if (!(await confirmar('Apagar o PIN de ' + p.nome + '?', 'A lista de presentes continua salva. No próximo acesso a pessoa cria um PIN novo.', 'Apagar PIN', true))) return;
-    try { const nd = await api('admApagarPin', { g, senha, pid: p.pid }); toast('PIN apagado.'); recarregar(nd, 'sorteio'); }
-    catch (e){ toast(e.message, true); }
+    if (!(await confirmar('Apagar a senha de ' + p.nome + '?', 'Os pedidos continuam salvos. No próximo acesso a pessoa cria uma senha nova.', 'Apagar senha', true))) return;
+    try { const nd = await api('admApagarPin', { g, senha, pid: p.pid }); toast('Senha apagada.'); recarregar(nd, 'liberar'); } catch (e){ toast(e.message, true); }
   }));
 }
 
-function admConfig({ g, senha, d, recarregar }){
-  const c = document.getElementById('admC');
-  const gr = d.grupo;
-  c.innerHTML = `
-    <div class="card form-card">
+function admAjustes({ g, senha, d, recarregar }){
+  const c = document.getElementById('admC'), gr = d.grupo;
+  c.innerHTML = `<div class="card estreito" style="margin:0">
       <h3>Dados do grupo</h3>
       <form id="fCfg">
-        <label class="campo"><span>Nome do grupo</span><input type="text" name="nome" maxlength="60" value="${esc(gr.nome)}" required></label>
-        <div class="linha">
-          <label class="campo"><span>Data da revelação</span><input type="date" name="data" value="${esc(gr.data)}" style="width:100%;padding:13px 14px;border:1.5px solid #d9d3c6;border-radius:12px;background:#fff"></label>
-          <label class="campo"><span>Valor sugerido</span><input type="text" name="valor" maxlength="30" value="${esc(gr.valor)}" placeholder="Ex.: até R$ 80"></label>
-        </div>
-        <button class="btn btn-verde" style="margin-top:20px">Salvar</button>
-      </form>
+        <span class="rotulo">Nome do grupo</span><input type="text" name="nome" maxlength="60" value="${esc(gr.nome)}" required>
+        <span class="rotulo">Data da revelação</span><input type="date" name="data" value="${esc(gr.data)}">
+        <span class="rotulo">Valor sugerido</span><input type="text" name="valor" maxlength="30" value="${esc(gr.valor)}" placeholder="Ex.: até R$ 80">
+        <button class="btn btn-verde btn-full" style="margin-top:20px">Salvar</button></form>
     </div>
-    <div class="card form-card" style="margin-top:18px;border-color:#efc9c3">
+    <div class="card estreito" style="margin:18px 0 0;border-color:#efc9c3">
       <h3 style="color:var(--vermelho)">Apagar grupo</h3>
-      <p>Apaga o grupo, os nomes, as listas e o sorteio. Não dá para desfazer. Libera uma vaga para um grupo novo (limite de 5).</p>
-      <label class="campo"><span>Para confirmar, escreva o nome do grupo</span><input type="text" id="confNome" placeholder="${esc(gr.nome)}"></label>
-      <button class="btn btn-vermelho" id="apagar" style="margin-top:16px">Apagar grupo</button>
+      <p class="sub">Apaga nomes, pedidos e sorteio. Não dá para desfazer. Libera uma vaga (limite de 5 grupos).</p>
+      <span class="rotulo">Escreva o nome do grupo para confirmar</span><input type="text" id="confNome" placeholder="${esc(gr.nome)}">
+      <button class="btn btn-vermelho btn-full" id="apagar" style="margin-top:14px">Apagar grupo</button>
     </div>`;
   document.getElementById('fCfg').addEventListener('submit', async e => {
     e.preventDefault(); const f = new FormData(e.target);
-    try { const nd = await api('admSalvarConfig', { g, senha, nome: f.get('nome'), data: f.get('data'), valor: f.get('valor') }); toast('Salvo!'); recarregar(nd, 'config'); }
-    catch (err){ toast(err.message, true); }
+    try { const nd = await api('admSalvarConfig', { g, senha, nome: f.get('nome'), data: f.get('data'), valor: f.get('valor') }); toast('Salvo!'); recarregar(nd, 'ajustes'); } catch (err){ toast(err.message, true); }
   });
   document.getElementById('apagar').addEventListener('click', async () => {
-    if (document.getElementById('confNome').value.trim() !== gr.nome) return toast('Escreva o nome do grupo exatamente igual para confirmar.', true);
+    if (document.getElementById('confNome').value.trim() !== gr.nome) return toast('Escreva o nome do grupo igualzinho para confirmar.', true);
     if (!(await confirmar('Apagar de vez?', 'Isso não pode ser desfeito.', 'Apagar grupo', true))) return;
-    try { await api('admApagarGrupo', { g, senha }); SS.del('adm:' + g); toast('Grupo apagado.'); location.hash = '#/'; }
-    catch (e){ toast(e.message, true); }
+    try { await api('admApagarGrupo', { g, senha }); toast('Grupo apagado.'); location.hash = '#/'; } catch (e){ toast(e.message, true); }
   });
 }
-
-/* ---------- ilustração do topo ---------- */
-const ILUSTRACAO = `<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Presente verde com laço vermelho">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a2f2a"/><stop offset=".55" stop-color="#5c3a2c"/><stop offset="1" stop-color="#3d2a20"/></linearGradient>
-    <radialGradient id="luz" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd98a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
-    <linearGradient id="caixa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a6a50"/><stop offset="1" stop-color="#163d31"/></linearGradient>
-    <linearGradient id="tampa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#31785b"/><stop offset="1" stop-color="#1b4a3a"/></linearGradient>
-    <linearGradient id="mesa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a6a45"/><stop offset="1" stop-color="#6e4a30"/></linearGradient>
-  </defs>
-  <rect width="600" height="600" fill="url(#bg)"/>
-  ${[[80,70,40],[200,40,30],[330,90,36],[470,50,44],[540,150,30],[120,190,26],[420,180,22]].map(([x,y,r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="url(#luz)"/>`).join('')}
-  <path d="M0 0h600v40c-60 18-120 18-180 0s-120-18-180 0-120 18-180 0-60-18-60 0z" fill="#e9c27c" opacity=".12"/>
-  <rect y="420" width="600" height="180" fill="url(#mesa)"/>
-  <rect y="420" width="600" height="8" fill="#b88660" opacity=".6"/>
-  <ellipse cx="300" cy="512" rx="190" ry="26" fill="#000" opacity=".28"/>
-  <!-- presentes de fundo -->
-  <rect x="455" y="330" width="110" height="100" rx="6" fill="#f3ece0"/><rect x="500" y="330" width="18" height="100" fill="#b9483f"/>
-  <rect x="455" y="372" width="110" height="16" fill="#b9483f"/>
-  <rect x="40" y="350" width="90" height="80" rx="6" fill="#b9483f"/><rect x="77" y="350" width="16" height="80" fill="#e9c27c"/>
-  <!-- caixa principal -->
-  <g transform="rotate(-8 300 380)">
-    <rect x="160" y="300" width="280" height="200" rx="10" fill="url(#caixa)"/>
-    <rect x="145" y="272" width="310" height="58" rx="10" fill="url(#tampa)"/>
-    <rect x="282" y="272" width="36" height="228" fill="#b9483f"/>
-    <rect x="282" y="272" width="10" height="228" fill="#d6655b" opacity=".6"/>
-    <path d="M300 272c-30-60-110-70-100-20 6 30 60 28 100 20z" fill="#c4524a"/>
-    <path d="M300 272c30-60 110-70 100-20-6 30-60 28-100 20z" fill="#b9483f"/>
-    <path d="M300 272c-20 20-40 60-60 80M300 272c20 20 40 60 60 80" stroke="#b9483f" stroke-width="20" stroke-linecap="round" fill="none"/>
-    <circle cx="300" cy="272" r="18" fill="#a63f37"/>
-  </g>
-  <!-- brilhos -->
-  ${[[110,260,16],[505,250,20],[250,150,12],[400,120,14]].map(([x,y,r]) => `<path transform="translate(${x} ${y})" d="M0 ${-r}c${r*.12} ${r*.7} ${r*.3} ${r*.88} ${r} ${r}c${-r*.7} ${r*.12} ${-r*.88} ${r*.3} ${-r} ${r}c${-r*.12} ${-r*.7} ${-r*.3} ${-r*.88} ${-r} ${-r}c${r*.7} ${-r*.12} ${r*.88} ${-r*.3} ${r} ${-r}z" fill="#e9c27c"/>`).join('')}
-</svg>`;
 
 rota();
 </script>
