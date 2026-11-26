@@ -10,7 +10,7 @@
 :root{
   --bg:#f9f6f0; --card:#fffdf8; --line:#ebe5d9; --verde:#173d31; --verde2:#1f5c45; --verde-claro:#e6f0ea;
   --vermelho:#b9483f; --vermelho-claro:#f8e6e1; --ouro:#e9c27c; --ouro-claro:#f6edd5; --texto:#25342e; --suave:#5f6964;
-  --raio:22px; --sombra:0 18px 40px -22px rgba(30,40,30,.25);
+  --raio:18px; --sombra:0 2px 6px -2px rgba(30,40,30,.12);
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--texto);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;font-size:19px;line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -22,12 +22,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 header.top{background:#fffdf9;border-bottom:1px solid var(--line)}
 header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:12px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:20px;color:var(--verde);letter-spacing:-.3px}
-.logo .mk{width:42px;height:42px;border-radius:12px;background:var(--verde);display:grid;place-items:center;transform:rotate(-6deg);flex:none}
-.logo .mk svg{transform:rotate(6deg)}
+.logo .mk{width:40px;height:40px;border-radius:10px;background:var(--verde);display:grid;place-items:center;flex:none}
 .logo b{color:var(--vermelho);font-weight:700}
 .top-acoes{display:flex;gap:8px;align-items:center}
 /* textos */
-.eyebrow{display:flex;align-items:center;gap:8px;color:var(--vermelho);font-weight:800;letter-spacing:2.2px;font-size:14px;text-transform:uppercase;margin:0 0 10px}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--vermelho);font-weight:700;letter-spacing:0;font-size:17px;margin:0 0 10px}
 h1,h2,h3{color:var(--verde);line-height:1.1;margin:0}
 h1{font-size:clamp(36px,7vw,64px);letter-spacing:-1.5px}
 h2{font-size:clamp(28px,5vw,42px);letter-spacing:-1px}
@@ -54,12 +53,17 @@ section{padding:36px 0}
 .aviso{border-radius:16px;padding:16px 18px;margin-top:16px;font-size:17px}
 .aviso.r{background:var(--vermelho-claro);color:#8c2f28} .aviso.v{background:var(--verde-claro);color:var(--verde)} .aviso.o{background:var(--ouro-claro);color:#6a4c10}
 /* botão grande "Quem sou eu" */
-.grande{display:flex;align-items:center;gap:20px;width:100%;border:0;border-radius:26px;padding:28px 26px;background:linear-gradient(135deg,#1f5c45,#173d31);color:#fff;cursor:pointer;text-align:left;box-shadow:0 22px 40px -20px rgba(23,61,49,.9);text-decoration:none;margin-top:26px}
+.grande{display:flex;align-items:center;gap:20px;width:100%;border:0;border-radius:26px;padding:28px 26px;background:var(--verde2);color:#fff;cursor:pointer;text-align:left;box-shadow:none;text-decoration:none;margin-top:26px}
 .grande:active{transform:scale(.99)}
-.grande .ic{width:76px;height:76px;border-radius:22px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:42px;flex:none}
+.grande .ic{width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;flex:none}
 .grande b{display:block;font-size:clamp(28px,6vw,38px);line-height:1.1}
 .grande .tx{display:block;color:#fff}
 .grande .tx span{display:block;color:#cfe2d8;font-size:18px;margin-top:6px}
+/* informações grandes */
+.infos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.infos div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.infos small{display:block;color:var(--suave);font-size:16px;font-weight:600}
+.infos b{display:block;color:var(--verde);font-size:clamp(24px,5.5vw,34px);line-height:1.15;margin-top:2px;word-break:break-word}
 /* lista de pedidos */
 .pedidos{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;margin-top:20px}
 .pedido h3{font-size:26px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
@@ -73,7 +77,7 @@ section{padding:36px 0}
 .tams{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .tams span{background:#f2ede3;border-radius:12px;padding:8px 12px;font-size:16px;color:var(--suave)}
 .tams b{color:var(--verde);font-size:19px}
-.surp{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#1f5c45,#173d31);color:#fff;border-radius:16px;padding:14px 16px;margin-top:12px;font-weight:700;font-size:19px}
+.surp{display:flex;gap:12px;align-items:center;background:var(--verde-claro);color:var(--verde);border-radius:16px;padding:14px 16px;margin-top:12px;font-weight:700;font-size:19px}
 .dica{margin:12px 0 0;color:var(--texto)} .dica b{color:var(--verde)}
 /* nomes */
 .nomes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:22px}
@@ -91,8 +95,8 @@ section{padding:36px 0}
 .teclado button:active{background:var(--verde-claro)}
 .teclado .apagar{font-size:20px;color:var(--vermelho)}
 /* sorteio */
-.sorteio{background:linear-gradient(160deg,#1f5c45,#123126);color:#fff;border-radius:30px;padding:40px 22px;text-align:center;position:relative;overflow:hidden}
-.sorteio small{letter-spacing:3px;text-transform:uppercase;font-weight:800;color:var(--ouro);font-size:15px}
+.sorteio{background:var(--verde);color:#fff;border-radius:30px;padding:40px 22px;text-align:center;position:relative;overflow:hidden}
+.sorteio small{font-weight:700;color:var(--ouro);font-size:20px}
 .sorteio .quem{font-size:clamp(46px,12vw,84px);font-weight:800;letter-spacing:-2px;margin:10px 0 6px;line-height:1.05;word-break:break-word}
 .sorteio p{color:#cfe2d8;margin:0;font-size:18px}
 .roleta{height:110px;display:grid;place-items:center;font-size:clamp(40px,10vw,70px);font-weight:800;margin:14px 0}
@@ -157,6 +161,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .modal .acoes{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
 .voltar{display:inline-flex;align-items:center;gap:8px;font-weight:700;text-decoration:none;color:var(--verde);font-size:19px;padding:12px 0;background:none;border:0;cursor:pointer}
 @media (max-width:560px){
+  .infos{grid-template-columns:1fr 1fr} .infos div:first-child{grid-column:1/-1}
   html,body{font-size:18px}
   .wrap{padding:0 16px}
   .card{padding:20px}
@@ -186,11 +191,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 /* =====================================================================
    COLE AQUI A URL DO APPS SCRIPT (termina em /exec)
    ===================================================================== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbyrVqPCZ4W0kkWjv-k2zXGRDW1KOQDQAuVmP4BlkDuKQBft5hx6xTNQl7cvhj23bIpo/exec';
+const API_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
 
-const VERSAO = '2.0.0';
-const DATA_VERSAO = '26/11/2026 16:45';
-document.getElementById('versao').textContent = 'Versão ' + VERSAO + ' · ' + DATA_VERSAO;
+const VERSAO = '2.1.0';
+document.getElementById('versao').textContent = 'Versão ' + VERSAO;
 
 /* ---------- utilidades ---------- */
 const $app = document.getElementById('app');
@@ -230,6 +234,9 @@ function confirmar(titulo, texto, okTxt = 'Confirmar', perigo){
 function dataBR(d){ const m = String(d || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? `${m[3]}/${m[2]}/${m[1]}` : d; }
 const ESTRELA = (c = '#e9c27c', s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path d="M12 2c.8 5 3.2 7.6 8.5 10-5.3 2.4-7.7 5-8.5 10-.8-5-3.2-7.6-8.5-10C8.8 9.6 11.2 7 12 2z" fill="${c}"/></svg>`;
 const PRESENTE = (s = 150) => `<svg width="${s}" height="${s}" viewBox="0 0 120 120"><rect x="18" y="50" width="84" height="58" rx="6" fill="#e9c27c"/><rect x="12" y="36" width="96" height="20" rx="5" fill="#f3d79e"/><rect x="54" y="36" width="12" height="72" fill="#b9483f"/><path d="M60 36c-10-22-36-24-32-8 3 11 20 10 32 8zM60 36c10-22 36-24 32-8-3 11-20 10-32 8z" fill="#b9483f"/><circle cx="60" cy="36" r="6" fill="#8f342d"/></svg>`;
+function valorBR(v){ v = String(v || '').trim(); return /^\d+([.,]\d{1,2})?$/.test(v) ? 'R$ ' + v : v; }
+const ICO_PESSOA = `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg>`;
+const ICO_PRESENTE = `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="9" width="17" height="11.5" rx="2"/><path d="M2.5 9h19M12 9v11.5M12 9c-1.5-3.5-6-4.3-6-1.6C6 9 9.5 9 12 9zm0 0c1.5-3.5 6-4.3 6-1.6C18 9 14.5 9 12 9z"/></svg>`;
 function dominio(u){ try { return new URL(u).hostname.replace(/^www\./, ''); } catch(e){ return ''; } }
 
 /* ---------- roteamento ----------
@@ -278,10 +285,10 @@ function cartaoPedido(p){
   else {
     const itens = (p.ideias || []).slice().sort((a, b) => (b.favorito ? 1 : 0) - (a.favorito ? 1 : 0));
     corpo = `
-      ${p.surpreenda ? `<div class="surp">🎁 Me surpreenda! Você escolhe o presente.</div>` : ''}
+      ${p.surpreenda ? `<div class="surp">Me surpreenda: quem tirou escolhe o presente.</div>` : ''}
       ${itens.length ? `<ul class="itens">${itens.map(i => `<li class="${i.favorito ? 'fav' : ''}">
-          ${i.texto ? `<div class="t">${i.favorito ? '⭐ ' : ''}${esc(i.texto)}</div>` : (i.favorito ? '<div class="t">⭐</div>' : '')}
-          ${i.link ? `<a class="loja" href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">🛒 Ver na loja <small>${esc(dominio(i.link))}</small></a>` : ''}
+          ${i.texto ? `<div class="t">${i.favorito ? '★ ' : ''}${esc(i.texto)}</div>` : ''}
+          ${i.link ? `<a class="loja" href="${esc(i.link)}" target="_blank" rel="noopener noreferrer">Ver na loja <small>${esc(dominio(i.link))}</small></a>` : ''}
         </li>`).join('')}</ul>` : ''}
       ${tamHtml}
       ${p.cores ? `<p class="dica"><b>Cores:</b> ${esc(p.cores)}</p>` : ''}
@@ -300,15 +307,15 @@ async function telaSorteio(g){
   const ord = participantes.slice().sort((a, b) => (b.preencheu ? 1 : 0) - (a.preencheu ? 1 : 0));
   const qtd = participantes.filter(p => p.preencheu).length;
   $app.innerHTML = `<div class="wrap"><section style="padding-top:34px">
-    <p class="eyebrow">${ESTRELA('#b9483f', 18)} Amigo secreto</p>
+    <p class="eyebrow">Amigo secreto</p>
     <h1>${esc(grupo.nome)}</h1>
-    <div class="meta">
-      ${grupo.data ? `<span class="pill c">📅 Revelação: ${esc(dataBR(grupo.data))}</span>` : ''}
-      ${grupo.valor ? `<span class="pill c">💰 ${esc(grupo.valor)}</span>` : ''}
-      <span class="pill">${participantes.length} pessoas</span>
+    <div class="infos">
+      ${grupo.data ? `<div><small>Revelação</small><b>${esc(dataBR(grupo.data))}</b></div>` : ''}
+      ${grupo.valor ? `<div><small>Valor</small><b>${esc(valorBR(grupo.valor))}</b></div>` : ''}
+      <div><small>Participantes</small><b>${participantes.length} pessoas</b></div>
     </div>
     <a class="grande" href="#/s/${esc(g)}/eu">
-      <span class="ic">${eu ? '🎁' : '👤'}</span>
+      <span class="ic">${eu ? ICO_PRESENTE : ICO_PESSOA}</span>
       <span class="tx"><b>${eu ? 'Continuar como ' + esc(eu.nome) : 'Quem sou eu?'}</b>
       <span>${eu ? 'Toque para ver quem você tirou e o que quer ganhar' : 'Toque aqui para sortear e contar o que você quer ganhar'}</span></span>
     </a>
@@ -341,7 +348,7 @@ function telaNomes(g, d){
     <p class="eyebrow">${esc(grupo.nome)}</p>
     <h2>Clique no seu nome</h2>
     <p class="sub" style="font-size:20px">para registrar sua senha e ver quem você tirou</p>
-    ${participantes.length ? `<div class="nomes">${participantes.map(p => `<button class="nome-btn" data-pid="${esc(p.pid)}">${esc(p.nome)} <small>${p.temPin ? '🔒' : ''}</small></button>`).join('')}</div>`
+    ${participantes.length ? `<div class="nomes">${participantes.map(p => `<button class="nome-btn" data-pid="${esc(p.pid)}">${esc(p.nome)} <small>${p.temPin ? 'já tem senha' : ''}</small></button>`).join('')}</div>`
       : `<div class="card" style="margin-top:20px">O organizador ainda não colocou os nomes.</div>`}
     <a class="voltar" href="#/s/${esc(g)}">← Voltar</a>
   </section></div>`;
@@ -406,18 +413,18 @@ async function painel(g, grupo, eu, pin){
   </div></section></div>`;
   // minha lista
   document.getElementById('areaEu').innerHTML = eu.preencheu
-    ? `<div class="card" style="margin-top:24px"><h3>✓ Você já contou o que quer ganhar</h3>
+    ? `<div class="card" style="margin-top:24px"><h3>Você já contou o que quer ganhar</h3>
         <p class="sub">Pode mudar quando quiser.</p>
-        <a class="btn btn-borda btn-full" style="margin-top:16px" href="#/s/${esc(g)}/quero">✏️ Mudar o que eu quero ganhar</a></div>`
+        <a class="btn btn-borda btn-full" style="margin-top:16px" href="#/s/${esc(g)}/quero">Mudar o que eu quero ganhar</a></div>`
     : `<div class="card" style="margin-top:24px;border:3px solid var(--ouro);background:#fffaee">
-        <h3>Falta uma coisa…</h3><p style="font-size:20px;margin:6px 0 0">Conte o que você quer ganhar!</p>
-        <a class="btn btn-ouro btn-full" style="margin-top:16px" href="#/s/${esc(g)}/quero">🎁 Contar o que eu quero ganhar</a></div>`;
+        <h3>Falta uma coisa…</h3><p style="font-size:20px;margin:6px 0 0">Conte o que você quer ganhar.</p>
+        <a class="btn btn-ouro btn-full" style="margin-top:16px" href="#/s/${esc(g)}/quero">Contar o que eu quero ganhar</a></div>`;
   // sorteio
   const area = document.getElementById('areaSorteio');
   let gr = grupo;
   try { gr = (await api('verGrupo', { g }, true)).grupo; } catch (e){}
   if (!gr.sorteado){
-    area.innerHTML = `<div class="card" style="text-align:center"><div style="font-size:54px">⏳</div>
+    area.innerHTML = `<div class="card" style="text-align:center">
       <h3>O sorteio ainda não foi liberado</h3><p class="sub">Quando o organizador liberar, volte aqui para sortear quem você vai presentear.</p></div>`;
     return;
   }
@@ -428,15 +435,15 @@ async function painel(g, grupo, eu, pin){
   area.innerHTML = `<div class="sorteio">
     <small>Sua vez de sortear</small>
     <button class="presente-btn" id="btnSortear" aria-label="Sortear">${PRESENTE(160)}</button>
-    <p style="font-size:22px;color:#fff;font-weight:700;margin-top:8px">Toque no presente para sortear!</p>
-    <p style="margin-top:6px">Veja se ninguém está olhando a sua tela 👀</p>
+    <p style="font-size:22px;color:#fff;font-weight:700;margin-top:8px">Toque no presente para sortear</p>
+    <p style="margin-top:6px">Confira se ninguém está olhando a sua tela.</p>
   </div>`;
   document.getElementById('btnSortear').addEventListener('click', () => girar(area, g, gr, eu, pin, r));
 }
 
 function girar(area, g, gr, eu, pin, r){
   const nomes = r.nomes.length ? r.nomes : [r.tirou.nome];
-  area.innerHTML = `<div class="sorteio"><small>Sorteando…</small><div class="roleta" id="roleta"></div><p>🥁</p></div>`;
+  area.innerHTML = `<div class="sorteio"><small>Sorteando…</small><div class="roleta" id="roleta"></div></div>`;
   const el = document.getElementById('roleta');
   let i = Math.floor(Math.random() * nomes.length), atraso = 60, total = 0;
   const passo = () => {
@@ -456,10 +463,10 @@ function mostrarResultado(area, g, gr, eu, r, festa){
   area.innerHTML = `<div class="sorteio" id="caixaRes">
       <small>Você tirou</small>
       <div class="quem">${esc(alvo.nome)}</div>
-      <p>Shhh… é segredo! 🤫</p>
+      <p>Não conte para ninguém.</p>
     </div>
-    <div class="aviso o" style="font-size:18px"><b>⬇ Baixe a imagem</b> e guarde no celular para não esquecer quem você tirou.</div>
-    <button class="btn btn-verde btn-full" id="baixar" style="margin-top:12px">⬇ Baixar imagem</button>
+    <div class="aviso o" style="font-size:18px"><b>Baixe a imagem</b> e guarde no celular para não esquecer quem você tirou.</div>
+    <button class="btn btn-verde btn-full" id="baixar" style="margin-top:12px">Baixar imagem</button>
     <div style="margin-top:24px">
       ${alvo.preencheu ? `<h3>${esc(alvo.nome)} gostaria de ganhar:</h3>` : ''}
       ${alvo.preencheu ? cartaoPedido(alvo).replace(/<h3>[\s\S]*?<\/h3>/, '') : `<div class="card"><h3>${esc(alvo.nome)} ainda não contou o que quer ganhar</h3><p class="sub">Volte aqui mais tarde para ver as sugestões.</p></div>`}
@@ -503,8 +510,8 @@ async function telaQuero(g){
     <h2>O que você quer ganhar?</h2>
     <p class="sub">Nada é obrigatório. Escreva do seu jeito.</p>
     <div class="escolha">
-      <button id="opSug"><span>✍️</span>Vou dar sugestões<small>Escrevo o que quero</small></button>
-      <button id="opSur"><span>🎁</span>Me surpreenda<small>Quem me tirou escolhe</small></button>
+      <button id="opSug">Vou dar sugestões<small>Escrevo o que quero</small></button>
+      <button id="opSur">Me surpreenda<small>Quem me tirou escolhe</small></button>
     </div>
     <div id="blocoSug"></div>
     <div id="avisoSur"></div>
@@ -516,21 +523,21 @@ async function telaQuero(g){
       <span class="rotulo">Alguma dica? <small>(cores, gostos, o que não gosta)</small></span>
       <textarea id="dicas" maxlength="500" placeholder="Ex.: gosto de azul, não bebo café">${esc([eu.cores, eu.dicas].filter(Boolean).join(eu.cores && eu.dicas ? '. ' : ''))}</textarea>
     </div>
-    <div class="salvar-barra"><button class="btn btn-verde btn-full" id="salvar">✓ Salvar</button></div>
+    <div class="salvar-barra"><button class="btn btn-verde btn-full" id="salvar">Salvar</button></div>
   </div></section></div>`;
 
   function desenharModo(){
     document.getElementById('opSug').classList.toggle('on', !surpreenda);
     document.getElementById('opSur').classList.toggle('on', surpreenda);
     document.getElementById('blocoSug').style.display = surpreenda ? 'none' : '';
-    document.getElementById('avisoSur').innerHTML = surpreenda ? `<div class="aviso v" style="font-size:18px">🎁 Combinado! Quem te tirou vai escolher. <b>Só falta escolher os 3 tamanhos abaixo.</b></div>` : '';
+    document.getElementById('avisoSur').innerHTML = surpreenda ? `<div class="aviso v" style="font-size:18px">Combinado: quem te tirou vai escolher. <b>Só falta escolher os 3 tamanhos abaixo.</b></div>` : '';
     document.getElementById('tamInfo').innerHTML = surpreenda ? '<b style="color:var(--vermelho)">Obrigatório: toque nos 3 tamanhos.</b>' : 'Opcional. Ajuda quem vai te dar roupa ou calçado.';
   }
   function desenharItens(){
     const b = document.getElementById('blocoSug');
     b.innerHTML = itens.map((i, k) => `<div class="item-ed" data-k="${k}">
         <div class="cab"><b>Presente ${k + 1}</b>
-          <span><button class="fav-btn ${i.favorito ? 'on' : ''}" data-fav="${k}">⭐ ${i.favorito ? 'O que mais quero' : 'Mais quero?'}</button>
+          <span><button class="fav-btn ${i.favorito ? 'on' : ''}" data-fav="${k}">${i.favorito ? '★ O que mais quero' : '☆ O que mais quero'}</button>
           <button class="apagar-btn" data-rm="${k}">Apagar</button></span></div>
         <textarea class="txt" maxlength="150" placeholder="Ex.: camiseta preta, jogo de facas…">${esc(i.texto)}</textarea>
         <input type="url" class="lnk" maxlength="500" inputmode="url" placeholder="Link da loja (opcional)" value="${esc(i.link)}">
@@ -578,7 +585,7 @@ async function telaQuero(g){
     try {
       await api('salvarLista', { g, pid: eu.pid, pin: s.pin, dados: { surpreenda, camiseta: tam.camiseta, shorts: tam.shorts, sapato: tam.sapato, cores: '', dicas: document.getElementById('dicas').value, ideias: lista } });
       window.onbeforeunload = null;
-      toast('Salvo! ✓');
+      toast('Salvo.');
       location.hash = '#/s/' + g + '/eu';
     } catch (e){ toast(e.message, true); }
   });
@@ -614,9 +621,9 @@ function baixarImagem(meuNome, alvo, grupo){
       x.fillStyle = '#5f6964'; x.font = `700 24px ${fonte}`; x.fillText(v[0].toUpperCase(), cx, 873);
       x.fillStyle = '#173d31'; x.font = `800 42px ${fonte}`; x.fillText(v[1] || '—', cx, 925); });
   } else { x.fillStyle = '#5f6964'; x.font = `600 30px ${fonte}`; x.fillText('Veja o que a pessoa quer ganhar no site', W / 2, 900); }
-  const info = [grupo.data ? 'Revelação: ' + dataBR(grupo.data) : '', grupo.valor || ''].filter(Boolean).join('   ·   ');
+  const info = [grupo.data ? 'Revelação: ' + dataBR(grupo.data) : '', grupo.valor ? 'Valor: ' + valorBR(grupo.valor) : ''].filter(Boolean).join('   ·   ');
   x.fillStyle = '#ffffff'; x.font = `600 34px ${fonte}`; if (info) x.fillText(info, W / 2, 1095);
-  x.fillStyle = '#e9c27c'; x.font = `700 30px ${fonte}`; x.fillText('Shhh… é segredo! 🤫', W / 2, 1170);
+  x.fillStyle = '#e9c27c'; x.font = `700 30px ${fonte}`; x.fillText('Não conte para ninguém', W / 2, 1170);
   x.fillStyle = 'rgba(255,255,255,.6)'; x.font = `600 24px ${fonte}`; x.fillText('Amigo secreto - Digital', W / 2, 1280);
   cv.toBlob(blob => {
     const nome = 'amigo-secreto-' + meuNome.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.png';
@@ -660,13 +667,13 @@ async function telaInicio(){
   document.getElementById('topAcoes').innerHTML = `<button class="btn btn-borda btn-peq" id="sairM">Sair</button>`;
   document.getElementById('sairM').addEventListener('click', sairMestre);
   $app.innerHTML = `<div class="wrap"><section>
-    <p class="eyebrow">${ESTRELA('#b9483f', 18)} Área do organizador</p>
+    <p class="eyebrow">Área do organizador</p>
     <h1>Seus amigos secretos</h1>
     <p class="sub">${d.grupos.length} de ${d.max} grupos usados. Só você vê esta página.</p>
     <div class="grupos">${d.grupos.map(gr => `<a class="card" style="text-decoration:none;color:inherit" href="#/g/${esc(gr.id)}/organizador">
       <h3>${esc(gr.nome)}</h3>
       <div class="meta"><span class="pill">${gr.total} pessoas</span>${gr.sorteado ? '<span class="pill r">Sorteio liberado</span>' : '<span class="pill o">Montando</span>'}
-      ${gr.data ? `<span class="pill c">📅 ${esc(dataBR(gr.data))}</span>` : ''}</div>
+      ${gr.data ? `<span class="pill c">${esc(dataBR(gr.data))}</span>` : ''}</div>
       <p style="font-weight:700;color:var(--verde);margin:14px 0 0">Abrir →</p></a>`).join('')}</div>
   </section>
   <section style="padding-top:0"><div class="card estreito" style="margin:0" id="criar"></div></section></div>`;
@@ -676,7 +683,7 @@ async function telaInicio(){
     <form id="fC">
       <span class="rotulo">Nome do grupo</span><input type="text" name="nome" maxlength="60" required placeholder="Ex.: Família Natal 2026">
       <span class="rotulo">Data da revelação <small>(opcional)</small></span><input type="date" name="data">
-      <span class="rotulo">Valor sugerido <small>(opcional)</small></span><input type="text" name="valor" maxlength="30" placeholder="Ex.: até R$ 80">
+      <span class="rotulo">Valor <small>(opcional)</small></span><input type="text" name="valor" maxlength="30" placeholder="Ex.: 100">
       <button class="btn btn-verde btn-full" style="margin-top:22px">Criar grupo</button></form>`;
   document.getElementById('fC').addEventListener('submit', async e => {
     e.preventDefault(); const f = new FormData(e.target);
@@ -718,12 +725,12 @@ function painelAdm(g, senha, d, aba){
     <p class="eyebrow">Organizador</p>
     <h2>${esc(grupo.nome)}</h2>
     <div class="meta"><span class="pill">${participantes.length} pessoas</span>
-      ${grupo.sorteado ? `<span class="pill r">✓ Sorteio liberado</span>` : '<span class="pill o">Montando</span>'}</div>
+      ${grupo.sorteado ? `<span class="pill r">Sorteio liberado</span>` : '<span class="pill o">Montando</span>'}</div>
     <div class="card" style="margin-top:20px;padding:20px">
       <b style="color:var(--verde)">Link dos participantes</b> <span class="sub" style="font-size:15px">(eles só veem o sorteio e os presentes)</span>
       <div class="link-box"><input type="text" readonly value="${esc(link)}" id="linkG">
         <button class="btn btn-verde btn-peq" id="copiar">Copiar link</button>
-        <a class="btn btn-borda btn-peq" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('🎁 Amigo secreto: ' + grupo.nome + '\nToque no link, clique em "Quem sou eu?", sorteie e conte o que você quer ganhar:\n' + link)}">WhatsApp</a></div>
+        <a class="btn btn-borda btn-peq" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Amigo secreto: ' + grupo.nome + '\nToque no link, clique em "Quem sou eu?", sorteie e conte o que você quer ganhar:\n' + link)}">WhatsApp</a></div>
     </div>
     <div class="abas">${abas.map(a => `<button class="aba ${a[0] === aba ? 'ativo' : ''}" data-a="${a[0]}">${a[1]}</button>`).join('')}</div>
     <div id="admC"></div>
@@ -799,8 +806,8 @@ function admRestricoes({ g, senha, d, recarregar }){
     document.getElementById('restLista').innerHTML = ps.map(a => `<div class="rest-card"><b style="color:var(--verde)">${esc(a.nome)}</b> <span class="sub" style="font-size:15px">não pode tirar:</span>
       <div class="chips">${ps.filter(b => b.pid !== a.pid).map(b => `<button class="chip ${proib[a.pid + '|' + b.pid] ? 'bloq' : ''}" data-a="${a.pid}" data-b="${b.pid}">${proib[a.pid + '|' + b.pid] ? '✕ ' : ''}${esc(b.nome)}</button>`).join('')}</div></div>`).join('');
     document.getElementById('viab').innerHTML = existeSorteio(ps.map(p => p.pid), proib)
-      ? '<div class="aviso v">✓ Com essas restrições o sorteio funciona.</div>'
-      : '<div class="aviso r"><b>⚠ Sorteio impossível.</b> Com essas restrições não dá para todo mundo tirar alguém. Tire alguma restrição.</div>';
+      ? '<div class="aviso v">Com essas restrições o sorteio funciona.</div>'
+      : '<div class="aviso r"><b>Sorteio impossível.</b> Com essas restrições não dá para todo mundo tirar alguém. Tire alguma restrição.</div>';
   };
   desenhar();
   document.getElementById('restLista').addEventListener('click', e => {
@@ -823,22 +830,22 @@ function admLiberar({ g, senha, d, recarregar }){
   const possivel = ps.length >= 3 && existeSorteio(ps.map(p => p.pid), proib);
   const jaSort = ps.filter(p => p.jaSorteou).length, jaEsc = ps.filter(p => p.preencheu).length;
   c.innerHTML = `<div class="card">
-    ${gr.sorteado ? `<h3>✓ Sorteio liberado</h3>
+    ${gr.sorteado ? `<h3>Sorteio liberado</h3>
       <p class="sub">O sistema já definiu em segredo quem tira quem. Cada pessoa abre o link, toca em "Quem sou eu?" e sorteia. Nem você vê os resultados, então pode participar também.</p>
       <button class="btn btn-borda btn-peq" id="desfazer" style="margin-top:16px;color:var(--vermelho);border-color:var(--vermelho)">Desfazer liberação</button>`
     : `<h3>Liberar o sorteio</h3>
       <p class="sub">Ao liberar, o sistema define em segredo quem tira quem, sem repetir ninguém e respeitando suas restrições. Depois disso cada pessoa sorteia o seu pelo link.</p>
       <p class="sub">Antes de liberar, as pessoas já podem entrar pelo link e contar o que querem ganhar.</p>
       ${ps.length < 3 ? '<div class="aviso r">Coloque pelo menos 3 nomes.</div>' : (!possivel ? '<div class="aviso r">As restrições deixam o sorteio impossível. Ajuste em "2. Restrições".</div>' : '')}
-      <button class="btn btn-verde btn-full" id="liberar" style="margin-top:18px" ${possivel ? '' : 'disabled'}>✨ Liberar sorteio</button>`}
+      <button class="btn btn-verde btn-full" id="liberar" style="margin-top:18px" ${possivel ? '' : 'disabled'}>Liberar sorteio</button>`}
   </div>
   <div class="card" style="margin-top:18px">
     <h3>Como está cada pessoa</h3>
     <p class="sub">${gr.sorteado ? jaSort + ' de ' + ps.length + ' já sortearam · ' : ''}${jaEsc} de ${ps.length} já contaram o que querem. "Apagar senha" é para quem esqueceu.</p>
     ${ps.map(p => `<div class="status-item"><b style="color:var(--verde)">${esc(p.nome)}</b>
       <span style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-        ${gr.sorteado ? (p.jaSorteou ? '<span class="pill">🎲 Já sorteou</span>' : '<span class="pill o">Não sorteou</span>') : ''}
-        ${p.preencheu ? '<span class="pill">🎁 Já escreveu</span>' : '<span class="pill c">Não escreveu</span>'}
+        ${gr.sorteado ? (p.jaSorteou ? '<span class="pill">Já sorteou</span>' : '<span class="pill o">Não sorteou</span>') : ''}
+        ${p.preencheu ? '<span class="pill">Já escreveu</span>' : '<span class="pill c">Não escreveu</span>'}
         ${p.temPin ? `<button class="x" data-pin="${esc(p.pid)}">Apagar senha</button>` : '<span class="pill c">Sem senha</span>'}
       </span></div>`).join('')}
   </div>`;
@@ -866,7 +873,7 @@ function admAjustes({ g, senha, d, recarregar }){
       <form id="fCfg">
         <span class="rotulo">Nome do grupo</span><input type="text" name="nome" maxlength="60" value="${esc(gr.nome)}" required>
         <span class="rotulo">Data da revelação</span><input type="date" name="data" value="${esc(gr.data)}">
-        <span class="rotulo">Valor sugerido</span><input type="text" name="valor" maxlength="30" value="${esc(gr.valor)}" placeholder="Ex.: até R$ 80">
+        <span class="rotulo">Valor</span><input type="text" name="valor" maxlength="30" value="${esc(gr.valor)}" placeholder="Ex.: 100">
         <button class="btn btn-verde btn-full" style="margin-top:20px">Salvar</button></form>
     </div>
     <div class="card estreito" style="margin:18px 0 0;border-color:#efc9c3">
